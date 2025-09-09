@@ -6,7 +6,11 @@ import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 import { Calculator, DollarSign, Clock, Zap, AlertTriangle } from 'lucide-react';
-import { calculateFeeComparison, formatUSD } from '@/lib/bsv-utils';
+import { calculateFeeComparison } from '@/lib/bsv-sdk-utils';
+
+const formatUSD = (amount: number) => {
+  return `$${amount.toFixed(6)}`;
+};
 
 interface FeeCalculation {
   blockchain: string;
@@ -31,7 +35,7 @@ export function FeeComparisonCalculator() {
       {
         blockchain: 'BSV',
         fee: bsvFee,
-        time: feeData.bsv.avgConfirmationTime,
+        time: feeData.bsv.confirmationTime,
         efficiency: Math.max(95 - (bsvFee / transactionValue) * 100, 10),
         color: 'text-green-600',
         icon: <Zap className="h-4 w-4" />
@@ -39,7 +43,7 @@ export function FeeComparisonCalculator() {
       {
         blockchain: 'BTC',
         fee: btcFee,
-        time: feeData.btc.avgConfirmationTime,
+        time: feeData.btc.confirmationTime,
         efficiency: Math.max(20 - (btcFee / transactionValue) * 10, 5),
         color: 'text-orange-600',
         icon: <Clock className="h-4 w-4" />
@@ -47,7 +51,7 @@ export function FeeComparisonCalculator() {
       {
         blockchain: 'ETH',
         fee: ethFee,
-        time: feeData.eth.avgConfirmationTime,
+        time: feeData.eth.confirmationTime,
         efficiency: Math.max(40 - (ethFee / transactionValue) * 8, 10),
         color: 'text-blue-600',
         icon: <AlertTriangle className="h-4 w-4" />

@@ -7,7 +7,7 @@ import { Progress } from './ui/progress';
 import { Button } from './ui/button';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 import { TrendingUp, Zap, Globe, Server, Infinity } from 'lucide-react';
-import { calculateThroughputMetrics } from '@/lib/bsv-utils';
+import { calculateThroughputMetrics } from '@/lib/bsv-sdk-utils';
 
 interface ThroughputMetric {
   name: string;

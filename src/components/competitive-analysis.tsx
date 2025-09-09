@@ -1,0 +1,524 @@
+'use client';
+
+import React, { useState } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { Badge } from './ui/badge';
+import { Progress } from './ui/progress';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from 'recharts';
+import { AlertTriangle, CheckCircle, XCircle, Clock, Zap, TrendingDown, TrendingUp } from 'lucide-react';
+
+interface CompetitiveSolution {
+  category: string;
+  solution: string;
+  approach: string;
+  effectiveness: number;
+  cost: string;
+  limitations: string[];
+  adoption: number;
+}
+
+interface ComparisonMetric {
+  aspect: string;
+  currentSolutions: number;
+  bsvSolution: number;
+  unit: string;
+}
+
+export function CompetitiveAnalysis() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('data-exploitation');
+
+  const competitiveSolutions: Record<string, CompetitiveSolution[]> = {
+    'data-exploitation': [
+      {
+        category: 'Legal',
+        solution: 'EU AI Act',
+        approach: 'Regulatory compliance',
+        effectiveness: 25,
+        cost: 'High',
+        limitations: ['Jurisdictional limits', 'Slow enforcement', 'Reactive only'],
+        adoption: 15
+      },
+      {
+        category: 'Technical',
+        solution: 'Glaze/Nightshade',
+        approach: 'Data poisoning',
+        effectiveness: 35,
+        cost: 'Medium',
+        limitations: ['Circumventable', 'Damages legitimate use', 'Arms race'],
+        adoption: 8
+      },
+      {
+        category: 'Licensing',
+        solution: 'Getty/Shutterstock',
+        approach: 'Corporate licensing',
+        effectiveness: 45,
+        cost: 'Very High',
+        limitations: ['Excludes individual creators', 'Pre-existing relationships only'],
+        adoption: 12
+      },
+      {
+        category: 'Opt-out',
+        solution: 'robots.txt',
+        approach: 'Voluntary compliance',
+        effectiveness: 15,
+        cost: 'Low',
+        limitations: ['Easily ignored', 'No enforcement', 'Limited scope'],
+        adoption: 35
+      }
+    ],
+    'trust-crisis': [
+      {
+        category: 'Detection',
+        solution: 'Reality Defender',
+        approach: 'AI detection tools',
+        effectiveness: 73,
+        cost: 'High',
+        limitations: ['Declining accuracy', 'Arms race', 'False positives'],
+        adoption: 22
+      },
+      {
+        category: 'Watermarking',
+        solution: 'SynthID',
+        approach: 'Content watermarking',
+        effectiveness: 55,
+        cost: 'Medium',
+        limitations: ['Can be stripped', 'Not retroactive', 'Format dependent'],
+        adoption: 18
+      },
+      {
+        category: 'Blockchain',
+        solution: 'Truepic',
+        approach: 'Content verification',
+        effectiveness: 80,
+        cost: 'Very High',
+        limitations: ['Expensive per verification', 'Limited scalability'],
+        adoption: 5
+      },
+      {
+        category: 'Legal',
+        solution: 'Deepfake laws',
+        approach: 'Criminalization',
+        effectiveness: 30,
+        cost: 'High',
+        limitations: ['Inconsistent enforcement', 'Jurisdictional issues'],
+        adoption: 25
+      }
+    ],
+    'blockchain-scaling': [
+      {
+        category: 'Layer 2',
+        solution: 'Lightning Network',
+        approach: 'Off-chain channels',
+        effectiveness: 60,
+        cost: 'Medium',
+        limitations: ['Liquidity requirements', 'Channel management', 'Centralization'],
+        adoption: 15
+      },
+      {
+        category: 'Alternative Consensus',
+        solution: 'Proof of Stake',
+        approach: 'Different consensus',
+        effectiveness: 70,
+        cost: 'Medium',
+        limitations: ['Wealth concentration', 'Validator centralization'],
+        adoption: 40
+      },
+      {
+        category: 'Sharding',
+        solution: 'Ethereum 2.0',
+        approach: 'Parallel processing',
+        effectiveness: 65,
+        cost: 'High',
+        limitations: ['Coordination complexity', 'Cross-shard communication'],
+        adoption: 30
+      },
+      {
+        category: 'New Architecture',
+        solution: 'Solana',
+        approach: 'High-performance blockchain',
+        effectiveness: 75,
+        cost: 'Medium',
+        limitations: ['Network outages', 'Centralization risks'],
+        adoption: 25
+      }
+    ]
+  };
+
+  const bsvComparisons: ComparisonMetric[] = [
+    {
+      aspect: 'Cost per Verification',
+      currentSolutions: 0.50,
+      bsvSolution: 0.0001,
+      unit: 'USD'
+    },
+    {
+      aspect: 'Transaction Throughput',
+      currentSolutions: 15,
+      bsvSolution: 100000,
+      unit: 'TPS'
+    },
+    {
+      aspect: 'Content Compensation',
+      currentSolutions: 0,
+      bsvSolution: 100,
+      unit: '% of value'
+    },
+    {
+      aspect: 'Network Decentralization',
+      currentSolutions: 45,
+      bsvSolution: 95,
+      unit: '% distributed'
+    },
+    {
+      aspect: 'Implementation Complexity',
+      currentSolutions: 85,
+      bsvSolution: 20,
+      unit: '% effort required'
+    }
+  ];
+
+  const effectivenessTrend = [
+    { year: 2020, detection: 95, legal: 60, licensing: 70 },
+    { year: 2021, detection: 88, legal: 55, licensing: 65 },
+    { year: 2022, detection: 82, legal: 50, licensing: 60 },
+    { year: 2023, detection: 76, legal: 40, licensing: 55 },
+    { year: 2024, detection: 73, legal: 30, licensing: 45 }
+  ];
+
+  const adoptionBarriers = [
+    { barrier: 'High Costs', percentage: 45 },
+    { barrier: 'Technical Complexity', percentage: 35 },
+    { barrier: 'Coordination Problems', percentage: 30 },
+    { barrier: 'Lack of Incentives', percentage: 40 },
+    { barrier: 'Jurisdictional Issues', percentage: 25 }
+  ];
+
+  const systemsComparison = [
+    {
+      approach: 'Current Fragmented',
+      components: 8,
+      integrationCost: 85,
+      maintenance: 90,
+      effectiveness: 35
+    },
+    {
+      approach: 'BSV Integrated',
+      components: 1,
+      integrationCost: 15,
+      maintenance: 25,
+      effectiveness: 95
+    }
+  ];
+
+  const COLORS = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6'];
+
+  const getCurrentSolutions = () => competitiveSolutions[selectedCategory] || [];
+
+  return (
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="text-center space-y-4">
+        <h1 className="text-4xl font-bold text-foreground">
+          Why Current Solutions Are Failing
+        </h1>
+        <p className="text-xl text-muted-foreground max-w-4xl mx-auto">
+          Comprehensive analysis of existing approaches and why BSV&apos;s integrated solution 
+          provides superior alternatives to fragmented, expensive, and ineffective current efforts.
+        </p>
+      </div>
+
+      {/* Problem Category Tabs */}
+      <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="data-exploitation">Data Exploitation</TabsTrigger>
+          <TabsTrigger value="trust-crisis">Trust Crisis</TabsTrigger>
+          <TabsTrigger value="blockchain-scaling">Blockchain Scaling</TabsTrigger>
+        </TabsList>
+
+        <TabsContent value={selectedCategory} className="space-y-6">
+          {/* Current Solutions Analysis */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <AlertTriangle className="h-5 w-5 text-amber-500" />
+                Current Solutions Analysis
+              </CardTitle>
+              <CardDescription>
+                Examining existing approaches, their limitations, and adoption rates
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-4">
+                {getCurrentSolutions().map((solution, index) => (
+                  <div key={index} className="p-4 border rounded-lg space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="font-semibold">{solution.solution}</h4>
+                        <p className="text-sm text-muted-foreground">{solution.approach}</p>
+                      </div>
+                      <Badge variant={solution.effectiveness > 60 ? "default" : solution.effectiveness > 30 ? "secondary" : "destructive"}>
+                        {solution.effectiveness}% effective
+                      </Badge>
+                    </div>
+                    
+                    <div className="grid md:grid-cols-2 gap-4">
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Effectiveness</div>
+                        <Progress value={solution.effectiveness} className="h-2" />
+                      </div>
+                      <div>
+                        <div className="text-xs text-muted-foreground mb-1">Adoption Rate</div>
+                        <Progress value={solution.adoption} className="h-2" />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <div className="text-xs text-muted-foreground mb-2">Key Limitations:</div>
+                      <div className="flex flex-wrap gap-1">
+                        {solution.limitations.map((limitation, i) => (
+                          <Badge key={i} variant="outline" className="text-xs">
+                            <XCircle className="h-3 w-3 mr-1" />
+                            {limitation}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
+
+      {/* Effectiveness Decline Trend */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <TrendingDown className="h-5 w-5 text-red-500" />
+            Solution Effectiveness Over Time
+          </CardTitle>
+          <CardDescription>
+            Why current approaches are losing ground in the technology arms race
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={effectivenessTrend}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="year" />
+              <YAxis domain={[0, 100]} />
+              <Tooltip formatter={(value: number) => [`${value}%`, 'Effectiveness']} />
+              <Line 
+                type="monotone" 
+                dataKey="detection" 
+                stroke="#ef4444" 
+                strokeWidth={2}
+                name="AI Detection Tools"
+              />
+              <Line 
+                type="monotone" 
+                dataKey="legal" 
+                stroke="#f97316" 
+                strokeWidth={2}
+                name="Legal Approaches"
+              />
+              <Line 
+                type="monotone" 
+                dataKey="licensing" 
+                stroke="#eab308" 
+                strokeWidth={2}
+                name="Licensing Platforms"
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+
+      {/* BSV vs Current Solutions Comparison */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Zap className="h-5 w-5 text-green-500" />
+            BSV vs Current Solutions
+          </CardTitle>
+          <CardDescription>
+            Quantitative comparison across key performance metrics
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-6">
+            {bsvComparisons.map((metric, index) => (
+              <div key={index} className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">{metric.aspect}</span>
+                  <div className="text-sm space-x-4">
+                    <span className="text-red-600">
+                      Current: {metric.currentSolutions} {metric.unit}
+                    </span>
+                    <span className="text-green-600">
+                      BSV: {metric.bsvSolution} {metric.unit}
+                    </span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <div className="text-xs text-muted-foreground mb-1">Current Solutions</div>
+                    <Progress 
+                      value={Math.min(100, (metric.currentSolutions / Math.max(metric.currentSolutions, metric.bsvSolution)) * 100)} 
+                      className="h-2"
+                    />
+                  </div>
+                  <div>
+                    <div className="text-xs text-muted-foreground mb-1">BSV Solution</div>
+                    <Progress 
+                      value={Math.min(100, (metric.bsvSolution / Math.max(metric.currentSolutions, metric.bsvSolution)) * 100)} 
+                      className="h-2 bg-green-100"
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Adoption Barriers */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Clock className="h-5 w-5 text-amber-500" />
+            Why Adoption Is Slow
+          </CardTitle>
+          <CardDescription>
+            Key barriers preventing widespread adoption of current solutions
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-6">
+            <div className="h-64">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={adoptionBarriers}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ barrier, percentage }) => `${barrier}: ${percentage}%`}
+                    outerRadius={80}
+                    fill="#8884d8"
+                    dataKey="percentage"
+                  >
+                    {adoptionBarriers.map((_, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Pie>
+                  <Tooltip />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="space-y-4">
+              {adoptionBarriers.map((barrier, index) => (
+                <div key={index} className="flex items-center gap-3">
+                  <div 
+                    className="w-4 h-4 rounded-full" 
+                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                  />
+                  <div className="flex-1">
+                    <div className="font-medium">{barrier.barrier}</div>
+                    <Progress value={barrier.percentage} className="h-2 mt-1" />
+                  </div>
+                  <span className="text-sm text-muted-foreground">{barrier.percentage}%</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Systems Comparison */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <TrendingUp className="h-5 w-5 text-green-500" />
+            Fragmented vs Integrated Approach
+          </CardTitle>
+          <CardDescription>
+            Why BSV&apos;s unified system architecture succeeds where fragmented solutions fail
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={systemsComparison} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="approach" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="integrationCost" fill="#ef4444" name="Integration Cost %" />
+              <Bar dataKey="maintenance" fill="#f97316" name="Maintenance Overhead %" />
+              <Bar dataKey="effectiveness" fill="#22c55e" name="Overall Effectiveness %" />
+            </BarChart>
+          </ResponsiveContainer>
+        </CardContent>
+      </Card>
+
+      {/* Key Insights */}
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card className="bg-red-50 border-red-200">
+          <CardHeader>
+            <CardTitle className="text-red-800 flex items-center gap-2">
+              <XCircle className="h-5 w-5" />
+              Why Current Solutions Fail
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2 text-sm text-red-700">
+              <li>• Address symptoms, not root causes</li>
+              <li>• Operate in isolated silos</li>
+              <li>• Lack sustainable economic models</li>
+              <li>• Create coordination overhead</li>
+              <li>• Accumulate technical debt over time</li>
+              <li>• Vulnerable to technological arms races</li>
+            </ul>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-green-50 border-green-200">
+          <CardHeader>
+            <CardTitle className="text-green-800 flex items-center gap-2">
+              <CheckCircle className="h-5 w-5" />
+              BSV&apos;s Integrated Advantages
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2 text-sm text-green-700">
+              <li>• Unified system with economic incentives</li>
+              <li>• Self-reinforcing network effects</li>
+              <li>• Scales with adoption rather than against it</li>
+              <li>• Single protocol eliminates integration costs</li>
+              <li>• Direct peer-to-peer architecture</li>
+              <li>• Sustainable creator compensation model</li>
+            </ul>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Call to Action */}
+      <Card className="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border-primary/20">
+        <CardContent className="pt-6">
+          <div className="text-center space-y-4">
+            <h3 className="text-2xl font-bold text-primary">The Systems-Level Solution</h3>
+            <p className="text-lg text-foreground max-w-3xl mx-auto">
+              While others build complex workarounds, BSV provides the fundamental infrastructure 
+              that makes AI sustainable, content trustworthy, and networks truly peer-to-peer.
+            </p>
+            <Badge variant="default" className="text-sm px-4 py-2">
+              Economic incentives drive technical adoption in a positive feedback loop
+            </Badge>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

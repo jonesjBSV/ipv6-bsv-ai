@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Link from "next/link";
-import { ArrowRight, Lightbulb, UserX, ShieldX, Link as LinkIcon, Bitcoin, Network, Target } from "lucide-react";
+import { ArrowRight, Lightbulb, UserX, ShieldX, AlertTriangle, Link as LinkIcon, Bitcoin, Network, Target } from "lucide-react";
 
 export default function Home() {
   const sections = [
@@ -26,6 +26,13 @@ export default function Home() {
       icon: ShieldX,
       href: "/trust-crisis",
       status: "Problem"
+    },
+    {
+      title: "Why Current Solutions Fail",
+      description: "Analysis - Examining existing approaches and their fundamental limitations",
+      icon: AlertTriangle,
+      href: "/competitive-solutions",
+      status: "Analysis"
     },
     {
       title: "Blockchain Solution",
@@ -94,6 +101,7 @@ export default function Home() {
                     variant={
                       section.status === "Problem" ? "destructive" :
                       section.status === "Solution" ? "default" :
+                      section.status === "Analysis" ? "outline" :
                       "secondary"
                     }
                   >

@@ -6,7 +6,7 @@ import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 import { CheckCircle, Shield, Zap, Download, Hash, Clock } from 'lucide-react';
-import { simulateSPVVerification } from '@/lib/bsv-utils';
+import { createSPVProof, verifySPVProof } from '@/lib/bsv-sdk-utils';
 
 interface VerificationStep {
   id: string;
@@ -16,6 +16,24 @@ interface VerificationStep {
   icon: React.ReactNode;
   duration: number; // in milliseconds
 }
+
+const simulateSPVVerification = () => {
+  const mockTxid = '0x' + Array(62).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+  const mockNodes = Array(8).fill(0).map(() => 
+    '0x' + Array(62).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join('')
+  );
+  const mockBlockHash = '0x' + Array(62).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+  const mockMerkleRoot = '0x' + Array(62).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+  
+  return {
+    transactionId: mockTxid,
+    blockHeight: 873250 + Math.floor(Math.random() * 100),
+    verificationTime: (Math.random() * 0.5 + 0.1).toFixed(3),
+    proofSize: 256 + Math.floor(Math.random() * 512), // bytes
+    merkleRoot: mockMerkleRoot,
+    merkleProof: mockNodes
+  };
+};
 
 export function SPVDemonstration() {
   const [isRunning, setIsRunning] = useState(false);

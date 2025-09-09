@@ -7,7 +7,11 @@ import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import { Calculator, DollarSign, Zap, TrendingUp, AlertCircle, CheckCircle } from 'lucide-react';
-import { generateMicropaymentExamples, formatUSD } from '@/lib/bsv-utils';
+import { generateMicropaymentExamples } from '@/lib/bsv-sdk-utils';
+
+const formatUSD = (amount: number) => {
+  return `$${amount.toFixed(6)}`;
+};
 
 interface UseCase {
   id: string;

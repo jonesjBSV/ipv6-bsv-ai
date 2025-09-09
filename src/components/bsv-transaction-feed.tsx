@@ -6,7 +6,7 @@ import { Badge } from './ui/badge';
 import { Skeleton } from './ui/skeleton';
 import { Alert, AlertDescription } from './ui/alert';
 import { Activity, Clock, DollarSign, Hash } from 'lucide-react';
-import { fetchRecentBSVTransactions, formatSatoshisToBSV, formatUSD, type BSVTransaction } from '@/lib/bsv-utils';
+import { fetchRecentBSVTransactions, type BSVTransaction } from '@/lib/bsv-sdk-utils';
 
 interface BSVTransactionFeedProps {
   limit?: number;
@@ -59,7 +59,15 @@ export function BSVTransactionFeed({
   };
 
   const getTotalValue = (tx: BSVTransaction) => {
-    return tx.outputs.reduce((sum, output) => sum + output.value, 0);
+    return tx.outputs.reduce((sum, output) => sum + output.satoshis, 0);
+  };
+
+  const formatSatoshisToBSV = (satoshis: number) => {
+    return `${(satoshis / 100000000).toFixed(8)} BSV`;
+  };
+
+  const formatUSD = (amount: number) => {
+    return `$${amount.toFixed(6)}`;
   };
 
   if (loading) {
@@ -141,7 +149,7 @@ export function BSVTransactionFeed({
                         <DollarSign className="h-3 w-3 text-green-600" />
                         <span className="text-muted-foreground">Value:</span>
                         <span className="font-medium">
-                          {formatSatoshisToBSV(getTotalValue(tx) * 100000000)}
+                          {formatSatoshisToBSV(getTotalValue(tx))}
                         </span>
                       </div>
                       <div className="flex items-center gap-1">
@@ -157,7 +165,7 @@ export function BSVTransactionFeed({
                         <Clock className="h-3 w-3 text-blue-600" />
                         <span className="text-muted-foreground">Time:</span>
                         <span className="font-medium">
-                          {formatTimeAgo(tx.time)}
+                          {formatTimeAgo(tx.timestamp)}
                         </span>
                       </div>
                       <div className="flex items-center gap-1">

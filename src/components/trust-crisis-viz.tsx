@@ -297,6 +297,113 @@ export default function TrustCrisisVisualization() {
           </div>
         </CardContent>
       </Card>
+
+      {/* Current Detection Approaches */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <Shield className="h-5 w-5 text-amber-500" />
+            Current Detection Approaches (Fighting a Losing Battle)
+          </CardTitle>
+          <CardDescription>
+            Various methods are being tried to detect deepfakes, but they&apos;re all in an arms race with generation technology
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4">
+            <div className="p-4 border rounded-lg bg-red-50 border-red-200">
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="font-semibold text-red-800">AI Detection Tools</h4>
+                <Badge variant="destructive" className="text-xs">73% Effective (Declining)</Badge>
+              </div>
+              <p className="text-sm text-red-700 mb-2">Reality Defender, Sensity, Microsoft Video Authenticator</p>
+              <div className="text-xs text-red-600">
+                <strong>Problems:</strong> Accuracy declining rapidly, high false positive rates, always behind generation tech
+              </div>
+            </div>
+
+            <div className="p-4 border rounded-lg bg-orange-50 border-orange-200">
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="font-semibold text-orange-800">Content Watermarking</h4>
+                <Badge variant="secondary" className="text-xs">55% Effective</Badge>
+              </div>
+              <p className="text-sm text-orange-700 mb-2">Google SynthID, Adobe Content Authenticity Initiative</p>
+              <div className="text-xs text-orange-600">
+                <strong>Problems:</strong> Can be stripped, not retroactive, format dependent, easy to circumvent
+              </div>
+            </div>
+
+            <div className="p-4 border rounded-lg bg-yellow-50 border-yellow-200">
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="font-semibold text-yellow-800">Expensive Blockchain Verification</h4>
+                <Badge variant="outline" className="text-xs">80% Effective</Badge>
+              </div>
+              <p className="text-sm text-yellow-700 mb-2">Truepic, Numbers Protocol content verification</p>
+              <div className="text-xs text-yellow-600">
+                <strong>Problems:</strong> Too expensive ($0.50+ per verification), doesn&apos;t scale to billions of content pieces
+              </div>
+            </div>
+
+            <div className="p-4 border rounded-lg bg-red-50 border-red-200">
+              <div className="flex items-center justify-between mb-2">
+                <h4 className="font-semibold text-red-800">Legal/Policy Responses</h4>
+                <Badge variant="destructive" className="text-xs">30% Effective</Badge>
+              </div>
+              <p className="text-sm text-red-700 mb-2">Deepfake criminalization laws, platform removal policies</p>
+              <div className="text-xs text-red-600">
+                <strong>Problems:</strong> Inconsistent enforcement, jurisdictional issues, reactive not preventative
+              </div>
+            </div>
+          </div>
+
+          <div className="mt-6">
+            <h4 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+              <TrendingDown className="h-4 w-4 text-red-500" />
+              Detection Accuracy Decline Over Time
+            </h4>
+            <ResponsiveContainer width="100%" height={200}>
+              <LineChart data={[
+                { year: 2020, aiDetection: 95, humanDetection: 85 },
+                { year: 2021, aiDetection: 88, humanDetection: 82 },
+                { year: 2022, aiDetection: 82, humanDetection: 78 },
+                { year: 2023, aiDetection: 76, humanDetection: 74 },
+                { year: 2024, aiDetection: 73, humanDetection: 62 }
+              ]}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="year" />
+                <YAxis domain={[50, 100]} />
+                <Tooltip formatter={(value: number) => [`${value}%`, 'Detection Accuracy']} />
+                <Line 
+                  type="monotone" 
+                  dataKey="aiDetection" 
+                  stroke="#ef4444" 
+                  strokeWidth={2}
+                  name="AI Detection Tools"
+                />
+                <Line 
+                  type="monotone" 
+                  dataKey="humanDetection" 
+                  stroke="#f97316" 
+                  strokeWidth={2}
+                  name="Human Detection"
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+            <h4 className="font-semibold text-green-800 mb-2 flex items-center gap-2">
+              <Shield className="h-4 w-4" />
+              What&apos;s Needed: Immutable Content Provenance
+            </h4>
+            <p className="text-sm text-green-700">
+              The only solution is to establish content authenticity at the source through 
+              cryptographic proofs recorded on an immutable ledger - making verification 
+              cheap enough to scale to billions of content pieces daily.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }
