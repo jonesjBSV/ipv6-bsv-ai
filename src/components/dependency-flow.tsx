@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { ArrowRight, Brain, Link, Network, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -196,7 +195,7 @@ export default function DependencyFlow() {
             <p className="text-muted-foreground max-w-2xl mx-auto">
               This integrated system creates sustainable incentives for creators, 
               maintains trust through verification, and enables innovation to scale 
-              globally without the current threats to AI's long-term viability.
+              globally without the current threats to AI&apos;s long-term viability.
             </p>
           </div>
         </CardContent>

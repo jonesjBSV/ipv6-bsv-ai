@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
@@ -155,7 +155,7 @@ export function SPVDemonstration() {
         {/* Verification Steps */}
         <div className="space-y-3">
           <h3 className="font-semibold">Verification Process</h3>
-          {steps.map((step, index) => (
+          {steps.map((step) => (
             <div 
               key={step.id}
               className={`p-3 border rounded-lg transition-colors ${

@@ -267,7 +267,7 @@ export function BSVDashboard() {
                   <div className="p-3 border rounded-lg">
                     <div className="font-medium text-purple-800 mb-1">Federated Learning</div>
                     <div className="text-sm text-muted-foreground">
-                      BSV's SPV enables lightweight verification for edge AI devices 
+                      BSV&apos;s SPV enables lightweight verification for edge AI devices 
                       participating in federated learning networks.
                     </div>
                   </div>

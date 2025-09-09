@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Skeleton } from './ui/skeleton';
@@ -24,7 +24,7 @@ export function BSVTransactionFeed({
   const [error, setError] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
 
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     try {
       setError(null);
       const txs = await fetchRecentBSVTransactions(limit);
@@ -35,14 +35,14 @@ export function BSVTransactionFeed({
     } finally {
       setLoading(false);
     }
-  };
+  }, [limit]);
 
   useEffect(() => {
     fetchTransactions();
 
     const interval = setInterval(fetchTransactions, refreshInterval);
     return () => clearInterval(interval);
-  }, [limit, refreshInterval]);
+  }, [fetchTransactions, limit, refreshInterval]);
 
   const formatTimeAgo = (timestamp: number) => {
     const now = Date.now() / 1000;
@@ -118,7 +118,7 @@ export function BSVTransactionFeed({
         )}
         
         <div className="space-y-3 max-h-96 overflow-y-auto">
-          {transactions.map((tx, index) => (
+          {transactions.map((tx) => (
             <div 
               key={tx.txid}
               className="p-3 border rounded-lg hover:bg-accent/50 transition-colors"

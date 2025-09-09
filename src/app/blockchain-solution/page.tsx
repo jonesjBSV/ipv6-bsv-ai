@@ -8,17 +8,17 @@ export default function BlockchainSolutionPage() {
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-4">Proposed Solution: Blockchain as the Missing Layer</h1>
         <p className="text-lg text-muted-foreground max-w-3xl">
-          Reference to Satoshi Nakamoto's original vision of Bitcoin: peer-to-peer electronic cash. 
-          Blockchain provides two critical mechanisms for solving AI's sustainability and trust problems.
+          Reference to Satoshi Nakamoto&apos;s original vision of Bitcoin: peer-to-peer electronic cash. 
+          Blockchain provides two critical mechanisms for solving AI&apos;s sustainability and trust problems.
         </p>
       </div>
 
       <div className="space-y-8">
         <Card className="bg-primary/10 border-primary/20">
           <CardHeader>
-            <CardTitle className="text-primary">Satoshi Nakamoto's Original Vision</CardTitle>
+            <CardTitle className="text-primary">Satoshi Nakamoto&apos;s Original Vision</CardTitle>
             <CardDescription>
-              "A purely peer-to-peer version of electronic cash" - Bitcoin White Paper, 2008
+              &quot;A purely peer-to-peer version of electronic cash&quot; - Bitcoin White Paper, 2008
             </CardDescription>
           </CardHeader>
           <CardContent>

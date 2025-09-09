@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -32,7 +32,6 @@ export default function TrustCrisisVisualization() {
 
   const trustDeclineData = formatTrustDeclineData(metrics);
   
-  const currentYear = trustDeclineData[trustDeclineData.length - 1];
   
   return (
     <div className="space-y-8">
@@ -146,7 +145,7 @@ export default function TrustCrisisVisualization() {
                   border: '1px solid hsl(var(--border))',
                   borderRadius: '6px'
                 }}
-                formatter={(value: any) => [`${value}%`, '']}
+                formatter={(value: number) => [`${value}%`, '']}
               />
               <Line
                 type="monotone"
@@ -286,7 +285,7 @@ export default function TrustCrisisVisualization() {
             <div>
               <h3 className="text-2xl font-bold text-destructive mb-2">The Inevitable Outcome</h3>
               <p className="text-lg text-foreground max-w-2xl mx-auto">
-                Eventually we'll reach the point where <strong>nobody will be able to tell the difference anymore</strong>, 
+                Eventually we&apos;ll reach the point where <strong>nobody will be able to tell the difference anymore</strong>, 
                 which will completely erode all trust and provide bad actors with the ability to cause mass chaos.
               </p>
             </div>

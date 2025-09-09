@@ -11,8 +11,8 @@ export default function BSVAdvantagesPage() {
         <h1 className="text-4xl font-bold mb-4">Why BSV Specifically</h1>
         <p className="text-lg text-muted-foreground max-w-3xl">
           Unlike other blockchains, BSV aligns with the original Bitcoin system design: 
-          high-throughput, low-cost, global-scale P2P transactions. It's not about speculation 
-          or artificial scarcity — it's about utility and infrastructure.
+          high-throughput, low-cost, global-scale P2P transactions. It&apos;s not about speculation 
+          or artificial scarcity — it&apos;s about utility and infrastructure.
         </p>
       </div>
 
@@ -21,7 +21,7 @@ export default function BSVAdvantagesPage() {
           <CardHeader>
             <CardTitle className="text-orange-500">Original Bitcoin System Design</CardTitle>
             <CardDescription>
-              BSV maintains the foundational principles of Satoshi's white paper
+              BSV maintains the foundational principles of Satoshi&apos;s white paper
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -80,7 +80,7 @@ export default function BSVAdvantagesPage() {
           <CardHeader>
             <CardTitle>Live BSV Network Status</CardTitle>
             <CardDescription>
-              Real-time blockchain metrics demonstrating BSV's capabilities for AI applications
+              Real-time blockchain metrics demonstrating BSV&apos;s capabilities for AI applications
             </CardDescription>
           </CardHeader>
           <CardContent>

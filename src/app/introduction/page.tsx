@@ -6,7 +6,7 @@ export default function IntroductionPage() {
       <div className="mb-8">
         <h1 className="text-4xl font-bold mb-4">Introduction: Why This Matters</h1>
         <p className="text-lg text-muted-foreground max-w-3xl">
-          AI's explosive growth has transformed industries and society at an unprecedented pace. 
+          AI&apos;s explosive growth has transformed industries and society at an unprecedented pace. 
           ChatGPT, image generators, deepfakes, and enterprise AI adoption show no signs of slowing down.
         </p>
       </div>

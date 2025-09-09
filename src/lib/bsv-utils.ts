@@ -12,7 +12,7 @@
  * - Micropayment calculations
  */
 
-import { Transaction, PrivateKey, P2PKH, Script, OP } from '@bsv/sdk';
+// import { Transaction } from '@bsv/sdk';
 
 // Types for BSV transaction data
 export interface BSVTransaction {
@@ -291,7 +291,7 @@ export function calculateThroughputMetrics() {
 export function createDemoTransaction(): string {
   try {
     // Create a demo transaction structure (for display purposes only)
-    const tx = new Transaction();
+    // const tx = new Transaction();
     
     // This is just for demonstration - not a real transaction
     const demoTxHex = '0100000001abc123def456789012345678901234567890123456789012345678901234567890000000006a47304402203456789012345678901234567890123456789012345678901234567890123456780220123456789012345678901234567890123456789012345678901234567890123456782012102abcdef1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdefffffffff0240420f00000000001976a914123456789012345678901234567890123456789088ac10270000000000001976a914987654321098765432109876543210987654321088ac00000000';

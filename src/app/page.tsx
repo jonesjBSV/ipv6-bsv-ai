@@ -83,7 +83,7 @@ export default function Home() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-        {sections.map((section, index) => {
+        {sections.map((section) => {
           const Icon = section.icon;
           return (
             <Card key={section.href} className="hover:shadow-lg transition-shadow">

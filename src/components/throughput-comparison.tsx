@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Progress } from './ui/progress';
@@ -26,7 +26,7 @@ export function ThroughputComparison() {
   
   const metrics = calculateThroughputMetrics();
 
-  const throughputData: ThroughputMetric[] = [
+  const throughputData: ThroughputMetric[] = useMemo(() => [
     {
       name: 'BSV',
       current: metrics.bsv.currentTPS,
@@ -57,7 +57,7 @@ export function ThroughputComparison() {
       color: '#3b82f6',
       icon: <Globe className="h-4 w-4" />
     }
-  ];
+  ], [metrics]);
 
   // Animation effect for counters
   useEffect(() => {

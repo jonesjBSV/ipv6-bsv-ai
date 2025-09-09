@@ -170,7 +170,7 @@ export default function AIGrowthChart() {
             <div className="flex-1">
               <h3 className="text-lg font-semibold text-destructive mb-2">The Challenge</h3>
               <p className="text-foreground text-base leading-relaxed">
-                "AI is not slowing down, but its very success threatens its long-term viability."
+                &quot;AI is not slowing down, but its very success threatens its long-term viability.&quot;
               </p>
               <p className="text-muted-foreground text-sm mt-3">
                 This explosive growth has created fundamental sustainability issues that must be addressed.

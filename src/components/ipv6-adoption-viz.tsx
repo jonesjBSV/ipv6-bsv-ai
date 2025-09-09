@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Globe, Network, Wifi, TrendingUp, Router, Shield } from "lucide-react";
+import { Globe, Network, TrendingUp, Router, Shield } from "lucide-react";
 import { getIPv6Statistics, formatIPv6AdoptionData, type IPv6Stats } from "@/lib/data-sources";
 
 export default function IPv6AdoptionVisualization() {
@@ -35,11 +35,6 @@ export default function IPv6AdoptionVisualization() {
     .sort((a, b) => b.adoption - a.adoption)
     .slice(0, 8);
 
-  const adoptionLevels = [
-    { level: "High (>50%)", count: countryData.filter(c => c.adoption > 50).length, color: "#10b981" },
-    { level: "Medium (30-50%)", count: countryData.filter(c => c.adoption >= 30 && c.adoption <= 50).length, color: "#f59e0b" },
-    { level: "Low (<30%)", count: countryData.filter(c => c.adoption < 30).length, color: "#ef4444" }
-  ];
 
   const natLimitations = [
     { aspect: "Direct Communication", withNAT: 15, withIPv6: 95 },
@@ -167,7 +162,7 @@ export default function IPv6AdoptionVisualization() {
                   border: '1px solid hsl(var(--border))',
                   borderRadius: '6px'
                 }}
-                formatter={(value: any) => [`${value}%`, 'IPv6 Adoption']}
+                formatter={(value: number) => [`${value}%`, 'IPv6 Adoption']}
               />
               <Bar 
                 dataKey="adoption" 
@@ -306,7 +301,7 @@ export default function IPv6AdoptionVisualization() {
             <div>
               <h3 className="text-2xl font-bold text-primary mb-2">The Network Foundation</h3>
               <p className="text-lg text-foreground max-w-3xl mx-auto">
-                Blockchain can't be fully peer-to-peer without the networking layer. 
+                Blockchain can&apos;t be fully peer-to-peer without the networking layer. 
                 IPv6 enables direct communication between every device, AI agent, and blockchain node 
                 without centralized bottlenecks.
               </p>
