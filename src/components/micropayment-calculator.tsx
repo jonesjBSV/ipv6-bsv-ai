@@ -1,0 +1,430 @@
+'use client';
+
+import React, { useState, useMemo } from 'react';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
+import { Badge } from './ui/badge';
+import { Button } from './ui/button';
+import { Progress } from './ui/progress';
+import { PieChart, Pie, Cell, ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { Calculator, DollarSign, Zap, TrendingUp, AlertCircle, CheckCircle } from 'lucide-react';
+import { generateMicropaymentExamples, formatUSD } from '@/lib/bsv-utils';
+
+interface UseCase {
+  id: string;
+  name: string;
+  description: string;
+  volume: number; // transactions per day
+  amount: number; // satoshis per transaction
+  category: 'AI' | 'IoT' | 'Content' | 'Gaming' | 'Data';
+  icon: React.ReactNode;
+}
+
+export function MicropaymentCalculator() {
+  const [selectedUseCase, setSelectedUseCase] = useState<string>('ai-api');
+  const [customAmount, setCustomAmount] = useState(1000);
+  const [customVolume, setCustomVolume] = useState(10000);
+  const [timeframe, setTimeframe] = useState<'day' | 'month' | 'year'>('day');
+
+  const useCases: UseCase[] = [
+    {
+      id: 'ai-api',
+      name: 'AI API Calls',
+      description: 'Pay per AI model inference or computation',
+      volume: 50000,
+      amount: 1000, // 1000 satoshis = ~$0.0005
+      category: 'AI',
+      icon: <Zap className="h-4 w-4" />
+    },
+    {
+      id: 'content-access',
+      name: 'Content Access',
+      description: 'Per-article reading or video streaming',
+      volume: 25000,
+      amount: 500,
+      category: 'Content',
+      icon: <DollarSign className="h-4 w-4" />
+    },
+    {
+      id: 'iot-data',
+      name: 'IoT Data Exchange',
+      description: 'Sensor data transmission and processing',
+      volume: 100000,
+      amount: 50,
+      category: 'IoT',
+      icon: <TrendingUp className="h-4 w-4" />
+    },
+    {
+      id: 'gaming-rewards',
+      name: 'Gaming Rewards',
+      description: 'In-game achievements and item trading',
+      volume: 75000,
+      amount: 2500,
+      category: 'Gaming',
+      icon: <CheckCircle className="h-4 w-4" />
+    },
+    {
+      id: 'data-storage',
+      name: 'Data Storage',
+      description: 'Pay per MB of decentralized storage',
+      volume: 15000,
+      amount: 5000,
+      category: 'Data',
+      icon: <AlertCircle className="h-4 w-4" />
+    }
+  ];
+
+  const currentUseCase = useCases.find(uc => uc.id === selectedUseCase) || useCases[0];
+  const micropaymentExamples = generateMicropaymentExamples();
+
+  const calculations = useMemo(() => {
+    const amount = selectedUseCase === 'custom' ? customAmount : currentUseCase.amount;
+    const volume = selectedUseCase === 'custom' ? customVolume : currentUseCase.volume;
+    
+    const bsvPrice = 50; // $50 per BSV
+    const satoshisPerBSV = 100000000;
+    const feePerByte = 0.05;
+    const avgTxSize = 250;
+    const txFee = feePerByte * avgTxSize; // ~12.5 satoshis
+    
+    const multiplier = timeframe === 'day' ? 1 : timeframe === 'month' ? 30 : 365;
+    const totalVolume = volume * multiplier;
+    
+    const totalRevenue = (amount * totalVolume) / satoshisPerBSV * bsvPrice;
+    const totalFees = (txFee * totalVolume) / satoshisPerBSV * bsvPrice;
+    const netRevenue = totalRevenue - totalFees;
+    const feePercentage = (totalFees / totalRevenue) * 100;
+    const profitMargin = (netRevenue / totalRevenue) * 100;
+    
+    return {
+      amount,
+      volume: totalVolume,
+      totalRevenue,
+      totalFees,
+      netRevenue,
+      feePercentage,
+      profitMargin,
+      avgTxValue: (amount / satoshisPerBSV) * bsvPrice,
+      avgTxFee: (txFee / satoshisPerBSV) * bsvPrice
+    };
+  }, [selectedUseCase, customAmount, customVolume, timeframe, currentUseCase]);
+
+  const pieData = [
+    { name: 'Net Revenue', value: calculations.netRevenue, color: '#22c55e' },
+    { name: 'Transaction Fees', value: calculations.totalFees, color: '#ef4444' }
+  ];
+
+  const comparisonData = micropaymentExamples.map(example => ({
+    name: example.description,
+    value: example.usdValue,
+    fee: (example.fee / 100000000) * 50, // Convert to USD
+    profitable: example.profitable,
+    feePercentage: example.feePercentage
+  }));
+
+  const getCategoryColor = (category: string) => {
+    const colors = {
+      'AI': 'bg-purple-100 text-purple-800',
+      'IoT': 'bg-blue-100 text-blue-800',
+      'Content': 'bg-green-100 text-green-800',
+      'Gaming': 'bg-orange-100 text-orange-800',
+      'Data': 'bg-gray-100 text-gray-800'
+    };
+    return colors[category as keyof typeof colors] || colors.Data;
+  };
+
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
+    if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
+    return num.toFixed(0);
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          <Calculator className="h-5 w-5" />
+          Micropayment Viability Calculator
+        </CardTitle>
+        <CardDescription>
+          Analyze the economics of micropayments across different BSV use cases
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-6">
+        {/* Use Case Selection */}
+        <div className="space-y-3">
+          <label className="block text-sm font-medium">Select Use Case:</label>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+            {useCases.map((useCase) => (
+              <Button
+                key={useCase.id}
+                variant={selectedUseCase === useCase.id ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedUseCase(useCase.id)}
+                className="h-auto p-3 flex flex-col items-start gap-1"
+              >
+                <div className="flex items-center gap-2 w-full">
+                  {useCase.icon}
+                  <span className="text-xs font-medium">{useCase.name}</span>
+                </div>
+                <Badge variant="secondary" className={getCategoryColor(useCase.category)}>
+                  {useCase.category}
+                </Badge>
+              </Button>
+            ))}
+            <Button
+              variant={selectedUseCase === 'custom' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setSelectedUseCase('custom')}
+              className="h-auto p-3 flex flex-col items-start gap-1"
+            >
+              <div className="flex items-center gap-2 w-full">
+                <Calculator className="h-4 w-4" />
+                <span className="text-xs font-medium">Custom</span>
+              </div>
+              <Badge variant="secondary">
+                Custom
+              </Badge>
+            </Button>
+          </div>
+        </div>
+
+        {/* Custom Inputs */}
+        {selectedUseCase === 'custom' && (
+          <div className="grid md:grid-cols-2 gap-4 p-4 border rounded-lg">
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Amount per transaction (satoshis)
+              </label>
+              <input
+                type="number"
+                value={customAmount}
+                onChange={(e) => setCustomAmount(Number(e.target.value))}
+                className="w-full px-3 py-2 border rounded-md"
+                min="1"
+                step="1"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2">
+                Volume per day
+              </label>
+              <input
+                type="number"
+                value={customVolume}
+                onChange={(e) => setCustomVolume(Number(e.target.value))}
+                className="w-full px-3 py-2 border rounded-md"
+                min="1"
+                step="1"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Timeframe Selection */}
+        <div className="space-y-2">
+          <label className="block text-sm font-medium">Timeframe:</label>
+          <div className="flex gap-2">
+            {(['day', 'month', 'year'] as const).map((tf) => (
+              <Button
+                key={tf}
+                variant={timeframe === tf ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setTimeframe(tf)}
+              >
+                Per {tf.charAt(0).toUpperCase() + tf.slice(1)}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Current Use Case Details */}
+        {selectedUseCase !== 'custom' && (
+          <div className="p-4 bg-muted/50 rounded-lg">
+            <h3 className="font-semibold mb-2 flex items-center gap-2">
+              {currentUseCase.icon}
+              {currentUseCase.name}
+            </h3>
+            <p className="text-sm text-muted-foreground mb-2">
+              {currentUseCase.description}
+            </p>
+            <div className="grid grid-cols-2 gap-4 text-sm">
+              <div>
+                <span className="text-muted-foreground">Amount:</span>
+                <span className="ml-2 font-medium">
+                  {currentUseCase.amount} sat ({formatUSD(calculations.avgTxValue)})
+                </span>
+              </div>
+              <div>
+                <span className="text-muted-foreground">Daily Volume:</span>
+                <span className="ml-2 font-medium">
+                  {formatNumber(currentUseCase.volume)} transactions
+                </span>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Financial Overview */}
+        <div className="grid md:grid-cols-3 gap-4">
+          <div className="p-4 border rounded-lg">
+            <div className="text-2xl font-bold text-green-600">
+              {formatUSD(calculations.totalRevenue)}
+            </div>
+            <div className="text-sm text-muted-foreground">Total Revenue</div>
+            <div className="text-xs text-muted-foreground mt-1">
+              {formatNumber(calculations.volume)} transactions
+            </div>
+          </div>
+          
+          <div className="p-4 border rounded-lg">
+            <div className="text-2xl font-bold text-red-600">
+              {formatUSD(calculations.totalFees)}
+            </div>
+            <div className="text-sm text-muted-foreground">Transaction Fees</div>
+            <div className="text-xs text-muted-foreground mt-1">
+              {calculations.feePercentage.toFixed(3)}% of revenue
+            </div>
+          </div>
+          
+          <div className="p-4 border rounded-lg">
+            <div className="text-2xl font-bold text-blue-600">
+              {formatUSD(calculations.netRevenue)}
+            </div>
+            <div className="text-sm text-muted-foreground">Net Revenue</div>
+            <div className="text-xs text-muted-foreground mt-1">
+              {calculations.profitMargin.toFixed(1)}% profit margin
+            </div>
+          </div>
+        </div>
+
+        {/* Revenue Breakdown Chart */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <h3 className="font-semibold mb-3">Revenue Breakdown</h3>
+            <div className="h-48">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={40}
+                    outerRadius={80}
+                    paddingAngle={5}
+                    dataKey="value"
+                  >
+                    {pieData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip formatter={(value: number) => formatUSD(value)} />
+                </PieChart>
+              </ResponsiveContainer>
+            </div>
+            <div className="flex justify-center gap-4 text-sm">
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-green-500 rounded"></div>
+                <span>Net Revenue</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-3 h-3 bg-red-500 rounded"></div>
+                <span>Fees</span>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <h3 className="font-semibold mb-3">Micropayment Examples</h3>
+            <div className="h-48">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={comparisonData.slice(0, 4)}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis 
+                    dataKey="name" 
+                    angle={-45}
+                    textAnchor="end"
+                    height={60}
+                    interval={0}
+                    fontSize={10}
+                  />
+                  <YAxis />
+                  <Tooltip 
+                    formatter={(value: number, name: string) => [
+                      name === 'value' ? formatUSD(value) : `${value.toFixed(3)}%`,
+                      name === 'value' ? 'Transaction Value' : 'Fee %'
+                    ]}
+                  />
+                  <Bar dataKey="value" fill="#22c55e" name="value" />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+
+        {/* Profitability Analysis */}
+        <div className="space-y-3">
+          <h3 className="font-semibold">Profitability Analysis</h3>
+          <div className="space-y-2">
+            {micropaymentExamples.map((example, index) => (
+              <div key={index} className="flex items-center justify-between p-3 border rounded-lg">
+                <div className="flex-1">
+                  <div className="font-medium">{example.description}</div>
+                  <div className="text-sm text-muted-foreground">
+                    {example.amount} sat ({formatUSD(example.usdValue)})
+                  </div>
+                </div>
+                <div className="text-right">
+                  <Badge variant={example.profitable ? 'default' : 'destructive'}>
+                    {example.profitable ? 'Profitable' : 'High Fee'}
+                  </Badge>
+                  <div className="text-xs text-muted-foreground mt-1">
+                    Fee: {example.feePercentage.toFixed(1)}%
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Key Insights */}
+        <div className="bg-blue-50 p-4 rounded-lg">
+          <h4 className="font-semibold text-blue-800 mb-2 flex items-center gap-2">
+            <TrendingUp className="h-4 w-4" />
+            BSV Micropayment Advantages
+          </h4>
+          <div className="grid md:grid-cols-2 gap-4 text-sm text-blue-700">
+            <ul className="space-y-1">
+              <li>• <strong>Ultra-low fees:</strong> {formatUSD(calculations.avgTxFee)} per transaction</li>
+              <li>• <strong>High profit margins:</strong> {calculations.profitMargin.toFixed(1)}% retained revenue</li>
+              <li>• <strong>Instant confirmation:</strong> Real-time payment processing</li>
+              <li>• <strong>Global scale:</strong> Unlimited transaction capacity</li>
+            </ul>
+            <ul className="space-y-1">
+              <li>• <strong>AI-friendly:</strong> Perfect for automated payments</li>
+              <li>• <strong>IoT compatible:</strong> Lightweight for edge devices</li>
+              <li>• <strong>IPv6 native:</strong> Direct peer-to-peer transactions</li>
+              <li>• <strong>Programmable:</strong> Smart contract integration</li>
+            </ul>
+          </div>
+        </div>
+
+        {/* Economic Efficiency Score */}
+        <div className="p-4 border rounded-lg">
+          <div className="flex justify-between items-center mb-2">
+            <span className="font-medium">Economic Efficiency Score</span>
+            <span className="text-2xl font-bold text-green-600">
+              {Math.max(20, 100 - calculations.feePercentage * 20).toFixed(0)}/100
+            </span>
+          </div>
+          <Progress 
+            value={Math.max(20, 100 - calculations.feePercentage * 20)} 
+            className="h-2 mb-2"
+          />
+          <div className="text-sm text-muted-foreground">
+            Based on fee-to-value ratio, transaction volume, and profit margins
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
