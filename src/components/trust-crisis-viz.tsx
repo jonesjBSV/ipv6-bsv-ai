@@ -403,10 +403,9 @@ export default function TrustCrisisVisualization() {
               <div className="flex items-center justify-between mb-2">
                 <h4 className="font-semibold text-red-800">AI Detection Tools</h4>
                 <div className="flex items-center gap-2">
-                  <Info 
-                    className="h-3 w-3 text-red-600 cursor-help" 
-                    title="Scale: 60% (limited coverage), Economic: 70% (affordable tools), Technical: 50% (declining accuracy), Enforcement: 85% (automated deployment)"
-                  />
+                  <div title="Scale: 60% (limited coverage), Economic: 70% (affordable tools), Technical: 50% (declining accuracy), Enforcement: 85% (automated deployment)">
+                    <Info className="h-3 w-3 text-red-600 cursor-help" />
+                  </div>
                   <Badge variant="destructive" className="text-xs">73% Effective (Declining)</Badge>
                 </div>
               </div>
@@ -420,10 +419,9 @@ export default function TrustCrisisVisualization() {
               <div className="flex items-center justify-between mb-2">
                 <h4 className="font-semibold text-orange-800">Content Watermarking</h4>
                 <div className="flex items-center gap-2">
-                  <Info 
-                    className="h-3 w-3 text-orange-600 cursor-help" 
-                    title="Scale: 40% (limited adoption), Economic: 80% (low cost), Technical: 45% (can be stripped), Enforcement: 55% (voluntary implementation)"
-                  />
+                  <div title="Scale: 40% (limited adoption), Economic: 80% (low cost), Technical: 45% (can be stripped), Enforcement: 55% (voluntary implementation)">
+                    <Info className="h-3 w-3 text-orange-600 cursor-help" />
+                  </div>
                   <Badge variant="secondary" className="text-xs">55% Effective</Badge>
                 </div>
               </div>
@@ -437,10 +435,9 @@ export default function TrustCrisisVisualization() {
               <div className="flex items-center justify-between mb-2">
                 <h4 className="font-semibold text-yellow-800">Expensive Blockchain Verification</h4>
                 <div className="flex items-center gap-2">
-                  <Info 
-                    className="h-3 w-3 text-yellow-600 cursor-help" 
-                    title="Scale: 15% (cost prohibitive), Economic: 20% (very expensive), Technical: 95% (cryptographically secure), Enforcement: 90% (immutable proof)"
-                  />
+                  <div title="Scale: 15% (cost prohibitive), Economic: 20% (very expensive), Technical: 95% (cryptographically secure), Enforcement: 90% (immutable proof)">
+                    <Info className="h-3 w-3 text-yellow-600 cursor-help" />
+                  </div>
                   <Badge variant="outline" className="text-xs">80% Effective</Badge>
                 </div>
               </div>
@@ -454,10 +451,9 @@ export default function TrustCrisisVisualization() {
               <div className="flex items-center justify-between mb-2">
                 <h4 className="font-semibold text-red-800">Legal/Policy Responses</h4>
                 <div className="flex items-center gap-2">
-                  <Info 
-                    className="h-3 w-3 text-red-600 cursor-help" 
-                    title="Scale: 25% (limited jurisdiction), Economic: 0% (no creator compensation), Technical: 30% (easily evaded), Enforcement: 65% (legal penalties where applicable)"
-                  />
+                  <div title="Scale: 25% (limited jurisdiction), Economic: 0% (no creator compensation), Technical: 30% (easily evaded), Enforcement: 65% (legal penalties where applicable)">
+                    <Info className="h-3 w-3 text-red-600 cursor-help" />
+                  </div>
                   <Badge variant="destructive" className="text-xs">30% Effective</Badge>
                 </div>
               </div>
