@@ -179,31 +179,34 @@ export default function TrustCrisisVisualization() {
                 type="monotone"
                 dataKey="trust"
                 stroke="#ef4444"
-                strokeWidth={4}
+                strokeWidth={3}
+                strokeLinecap="round"
                 name="Public Trust in Digital Content"
-                dot={{ fill: '#ef4444', strokeWidth: 2, r: 6 }}
-                activeDot={{ r: 8, fill: '#ef4444' }}
+                dot={{ fill: '#ef4444', stroke: '#ffffff', strokeWidth: 3, r: 8 }}
+                activeDot={{ r: 10, fill: '#ef4444', stroke: '#ffffff', strokeWidth: 2 }}
                 strokeDasharray="0"
               />
               <Line
                 type="monotone"
                 dataKey="detection"
                 stroke="#f97316"
-                strokeWidth={4}
+                strokeWidth={3}
+                strokeLinecap="round" 
                 name="AI Detection Accuracy"
-                dot={{ fill: '#f97316', strokeWidth: 2, r: 6 }}
-                activeDot={{ r: 8, fill: '#f97316' }}
-                strokeDasharray="5 5"
+                dot={{ fill: '#f97316', stroke: '#ffffff', strokeWidth: 3, r: 8 }}
+                activeDot={{ r: 10, fill: '#f97316', stroke: '#ffffff', strokeWidth: 2 }}
+                strokeDasharray="8 4"
               />
               <Line
                 type="monotone"
                 dataKey="human"
                 stroke="#3b82f6"
-                strokeWidth={4}
+                strokeWidth={3}
+                strokeLinecap="round"
                 name="Human Detection Ability"
-                dot={{ fill: '#3b82f6', strokeWidth: 2, r: 6 }}
-                activeDot={{ r: 8, fill: '#3b82f6' }}
-                strokeDasharray="10 5"
+                dot={{ fill: '#3b82f6', stroke: '#ffffff', strokeWidth: 3, r: 8 }}
+                activeDot={{ r: 10, fill: '#3b82f6', stroke: '#ffffff', strokeWidth: 2 }}
+                strokeDasharray="2 3"
               />
             </LineChart>
           </ResponsiveContainer>

@@ -157,26 +157,35 @@ export default function AIGrowthChart() {
               <Line
                 type="monotone"
                 dataKey="users"
-                stroke="hsl(var(--primary))"
+                stroke="#ef4444"
                 strokeWidth={3}
+                strokeLinecap="round"
                 name="ChatGPT Users (Millions)"
-                dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
+                dot={{ fill: '#ef4444', stroke: '#ffffff', strokeWidth: 3, r: 8 }}
+                activeDot={{ r: 10, fill: '#ef4444', stroke: '#ffffff', strokeWidth: 2 }}
+                strokeDasharray="0"
               />
               <Line
                 type="monotone"
                 dataKey="investment"
-                stroke="hsl(var(--destructive))"
+                stroke="#3b82f6"
                 strokeWidth={3}
+                strokeLinecap="round"
                 name="Investment (Billions $)"
-                dot={{ fill: 'hsl(var(--destructive))', strokeWidth: 2, r: 4 }}
+                dot={{ fill: '#3b82f6', stroke: '#ffffff', strokeWidth: 3, r: 8 }}
+                activeDot={{ r: 10, fill: '#3b82f6', stroke: '#ffffff', strokeWidth: 2 }}
+                strokeDasharray="8 4"
               />
               <Line
                 type="monotone"
                 dataKey="models"
-                stroke="hsl(var(--chart-3))"
+                stroke="#f97316"
                 strokeWidth={3}
+                strokeLinecap="round"
                 name="Models Released"
-                dot={{ fill: 'hsl(var(--chart-3))', strokeWidth: 2, r: 4 }}
+                dot={{ fill: '#f97316', stroke: '#ffffff', strokeWidth: 3, r: 8 }}
+                activeDot={{ r: 10, fill: '#f97316', stroke: '#ffffff', strokeWidth: 2 }}
+                strokeDasharray="2 3"
               />
             </LineChart>
           </ResponsiveContainer>
