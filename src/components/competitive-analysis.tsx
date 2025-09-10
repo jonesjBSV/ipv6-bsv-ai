@@ -331,7 +331,7 @@ export function CompetitiveAnalysis() {
                       <div className="p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
                         <h5 className="font-medium text-blue-900">Scale of Impact (40%)</h5>
                         <p className="text-sm text-blue-700 mt-1">
-                          Measures the solution's ability to address the problem comprehensively across all affected parties and use cases.
+                          Measures the solution&apos;s ability to address the problem comprehensively across all affected parties and use cases.
                         </p>
                       </div>
                       <div className="p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
@@ -479,7 +479,7 @@ export function CompetitiveAnalysis() {
                       <div className="p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
                         <h5 className="font-medium text-blue-900">Scale of Impact (40%)</h5>
                         <p className="text-sm text-blue-700 mt-1">
-                          Measures the solution's ability to address the problem comprehensively across all affected parties and use cases.
+                          Measures the solution&apos;s ability to address the problem comprehensively across all affected parties and use cases.
                         </p>
                       </div>
                       <div className="p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
@@ -627,7 +627,7 @@ export function CompetitiveAnalysis() {
                       <div className="p-3 bg-blue-50 rounded-lg border-l-4 border-blue-500">
                         <h5 className="font-medium text-blue-900">Scale of Impact (40%)</h5>
                         <p className="text-sm text-blue-700 mt-1">
-                          Measures the solution's ability to address the problem comprehensively across all affected parties and use cases.
+                          Measures the solution&apos;s ability to address the problem comprehensively across all affected parties and use cases.
                         </p>
                       </div>
                       <div className="p-3 bg-green-50 rounded-lg border-l-4 border-green-500">
@@ -815,7 +815,7 @@ export function CompetitiveAnalysis() {
                   <ul className="text-sm text-red-700 space-y-1">
                     <li>• <strong>Reality Defender:</strong> Quarterly accuracy reports and detection performance metrics</li>
                     <li>• <strong>Microsoft, Google AI:</strong> Research papers on synthetic media detection degradation</li>
-                    <li>• <strong>Academic Studies:</strong> "The Arms Race in Synthetic Content Detection" - Rodriguez et al. (2024)</li>
+                    <li>• <strong>Academic Studies:</strong> &quot;The Arms Race in Synthetic Content Detection&quot; - Rodriguez et al. (2024)</li>
                     <li>• <strong>Industry Reports:</strong> AI detection tool benchmarking by independent security firms</li>
                   </ul>
                 </div>
@@ -826,7 +826,7 @@ export function CompetitiveAnalysis() {
                     <li>• <strong>Regulatory Analysis:</strong> EU AI Act implementation effectiveness studies</li>
                     <li>• <strong>Policy Research:</strong> Brookings Institution reports on deepfake legislation</li>
                     <li>• <strong>Legal Databases:</strong> Case law analysis and enforcement statistics</li>
-                    <li>• <strong>Academic Sources:</strong> "Effectiveness of Regulatory Approaches" - Wu et al. (2023)</li>
+                    <li>• <strong>Academic Sources:</strong> &quot;Effectiveness of Regulatory Approaches&quot; - Wu et al. (2023)</li>
                   </ul>
                 </div>
 
@@ -860,7 +860,7 @@ export function CompetitiveAnalysis() {
               <p className="text-sm text-gray-700">
                 The declining effectiveness trends reflect the inherent challenge of reactive solutions in fast-moving 
                 technological environments. As each defensive measure is deployed, adversarial actors develop 
-                countermeasures, creating a continuous "arms race" dynamic where effectiveness naturally degrades over time 
+                countermeasures, creating a continuous &quot;arms race&quot; dynamic where effectiveness naturally degrades over time 
                 without fundamental architectural changes to the underlying systems.
               </p>
             </div>
