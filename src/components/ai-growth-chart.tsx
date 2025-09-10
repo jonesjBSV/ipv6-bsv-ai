@@ -42,7 +42,7 @@ export default function AIGrowthChart() {
     );
   }
 
-  const chartData = formatAIGrowthData(metrics);
+  const chartData = formatAIGrowthData();
   
   const stats = [
     {

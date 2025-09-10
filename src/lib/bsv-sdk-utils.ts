@@ -12,7 +12,7 @@
  * - Correct BSV terminology (lockingScript, unlockingScript)
  */
 
-import { Transaction, P2PKH, PublicKey, Utils, Hash } from '@bsv/sdk';
+import { Transaction, P2PKH, PrivateKey, Utils, Hash, LockingScript } from '@bsv/sdk';
 
 // ARC Configuration
 const ARC_ENDPOINTS = {
@@ -195,7 +195,7 @@ export function createMicropaymentTransaction(
     sourceTXID: '0000000000000000000000000000000000000000000000000000000000000000',
     sourceOutputIndex: 0,
     unlockingScriptTemplate: new P2PKH().unlock(
-      new PublicKey('02' + '0'.repeat(64)) // Demo public key
+      PrivateKey.fromString('0'.repeat(64), 16) // Demo private key
     ),
     sequence: 0xFFFFFFFF
   });
@@ -203,15 +203,14 @@ export function createMicropaymentTransaction(
   // Add payment output using P2PKH with proper lockingScript
   const p2pkh = new P2PKH();
   tx.addOutput({
-    lockingScript: p2pkh.lock(recipientAddress).toHex(),
+    lockingScript: p2pkh.lock(recipientAddress),
     satoshis: amountSatoshis
   });
 
   // Add OP_RETURN output for message if provided
   if (message) {
-    const opReturnScript = `006a${Buffer.from(message).toString('hex')}`;
     tx.addOutput({
-      lockingScript: opReturnScript,
+      lockingScript: LockingScript.fromHex(`006a${Buffer.from(message).toString('hex')}`),
       satoshis: 0
     });
   }

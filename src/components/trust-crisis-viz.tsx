@@ -30,7 +30,7 @@ export default function TrustCrisisVisualization() {
     return <div className="animate-pulse space-y-4">Loading trust crisis data...</div>;
   }
 
-  const trustDeclineData = formatTrustDeclineData(metrics);
+  const trustDeclineData = formatTrustDeclineData();
   
   
   return (
