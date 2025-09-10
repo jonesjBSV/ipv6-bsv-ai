@@ -91,11 +91,11 @@ export function BSVDashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-center justify-between">
+      {/* Header - Mobile Optimized */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold">BSV Blockchain Dashboard</h1>
-          <p className="text-muted-foreground">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold">BSV Blockchain Dashboard</h1>
+          <p className="text-sm sm:text-base text-muted-foreground">
             Real-time BSV network data demonstrating scalability and efficiency for AI applications
           </p>
         </div>
@@ -104,10 +104,10 @@ export function BSVDashboard() {
           size="sm"
           onClick={fetchNetworkData}
           disabled={isLoading}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 min-h-[44px] px-4 self-start sm:self-auto"
         >
           <RefreshCw className={`h-4 w-4 ${isLoading ? 'animate-spin' : ''}`} />
-          Refresh
+          <span className="hidden sm:inline">Refresh</span>
         </Button>
       </div>
 
@@ -121,15 +121,15 @@ export function BSVDashboard() {
         </Alert>
       )}
 
-      {/* Network Overview Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      {/* Network Overview Cards - Mobile Optimized */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
         <Card>
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex items-center gap-2">
-              <Network className="h-4 w-4 text-blue-600" />
-              <div className="text-sm text-muted-foreground">Current Block</div>
+              <Network className="h-3 w-3 sm:h-4 sm:w-4 text-blue-600" />
+              <div className="text-xs sm:text-sm text-muted-foreground">Current Block</div>
             </div>
-            <div className="text-2xl font-bold">
+            <div className="text-lg sm:text-xl lg:text-2xl font-bold">
               {networkData ? formatNumber(networkData.currentBlock) : '--'}
             </div>
             <div className="text-xs text-muted-foreground">
@@ -139,12 +139,12 @@ export function BSVDashboard() {
         </Card>
 
         <Card>
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex items-center gap-2">
-              <TrendingUp className="h-4 w-4 text-green-600" />
-              <div className="text-sm text-muted-foreground">Difficulty</div>
+              <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4 text-green-600" />
+              <div className="text-xs sm:text-sm text-muted-foreground">Difficulty</div>
             </div>
-            <div className="text-2xl font-bold">
+            <div className="text-lg sm:text-xl lg:text-2xl font-bold">
               {networkData ? formatDifficulty(networkData.difficulty) : '--'}
             </div>
             <div className="text-xs text-muted-foreground">
@@ -154,12 +154,12 @@ export function BSVDashboard() {
         </Card>
 
         <Card>
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex items-center gap-2">
-              <Zap className="h-4 w-4 text-orange-600" />
-              <div className="text-sm text-muted-foreground">Hashrate</div>
+              <Zap className="h-3 w-3 sm:h-4 sm:w-4 text-orange-600" />
+              <div className="text-xs sm:text-sm text-muted-foreground">Hashrate</div>
             </div>
-            <div className="text-2xl font-bold">
+            <div className="text-lg sm:text-xl lg:text-2xl font-bold">
               {networkData?.networkHashrate || '--'}
             </div>
             <div className="text-xs text-muted-foreground">
@@ -169,12 +169,12 @@ export function BSVDashboard() {
         </Card>
 
         <Card>
-          <CardContent className="p-4">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex items-center gap-2">
-              <Globe className="h-4 w-4 text-purple-600" />
-              <div className="text-sm text-muted-foreground">Block Time</div>
+              <Globe className="h-3 w-3 sm:h-4 sm:w-4 text-purple-600" />
+              <div className="text-xs sm:text-sm text-muted-foreground">Block Time</div>
             </div>
-            <div className="text-2xl font-bold">
+            <div className="text-lg sm:text-xl lg:text-2xl font-bold">
               {networkData?.avgBlockTime || '--'}
             </div>
             <div className="text-xs text-muted-foreground">
@@ -184,34 +184,37 @@ export function BSVDashboard() {
         </Card>
       </div>
 
-      {/* Main Dashboard Tabs */}
+      {/* Main Dashboard Tabs - Mobile Optimized */}
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-6">
-          <TabsTrigger value="overview" className="flex items-center gap-2">
-            <Activity className="h-4 w-4" />
-            Live Feed
-          </TabsTrigger>
-          <TabsTrigger value="fees" className="flex items-center gap-2">
-            <Calculator className="h-4 w-4" />
-            Fee Compare
-          </TabsTrigger>
-          <TabsTrigger value="throughput" className="flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
-            Throughput
-          </TabsTrigger>
-          <TabsTrigger value="spv" className="flex items-center gap-2">
-            <Shield className="h-4 w-4" />
-            SPV Demo
-          </TabsTrigger>
-          <TabsTrigger value="micropayments" className="flex items-center gap-2">
-            <Zap className="h-4 w-4" />
-            Micropayments
-          </TabsTrigger>
-          <TabsTrigger value="ai-benefits" className="flex items-center gap-2">
-            <Globe className="h-4 w-4" />
-            AI Benefits
-          </TabsTrigger>
-        </TabsList>
+        {/* Mobile: Horizontal scroll tabs, Desktop: Grid layout */}
+        <div className="relative">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-1">
+            <TabsTrigger value="overview" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3">
+              <Activity className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="text-xs sm:text-sm">Live Feed</span>
+            </TabsTrigger>
+            <TabsTrigger value="fees" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3">
+              <Calculator className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="text-xs sm:text-sm">Fees</span>
+            </TabsTrigger>
+            <TabsTrigger value="throughput" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3">
+              <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="text-xs sm:text-sm">Throughput</span>
+            </TabsTrigger>
+            <TabsTrigger value="spv" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3">
+              <Shield className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="text-xs sm:text-sm">SPV</span>
+            </TabsTrigger>
+            <TabsTrigger value="micropayments" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3">
+              <Zap className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="text-xs sm:text-sm">Micro</span>
+            </TabsTrigger>
+            <TabsTrigger value="ai-benefits" className="flex items-center gap-1 sm:gap-2 px-2 sm:px-3">
+              <Globe className="h-3 w-3 sm:h-4 sm:w-4" />
+              <span className="text-xs sm:text-sm">AI</span>
+            </TabsTrigger>
+          </TabsList>
+        </div>
 
         <TabsContent value="overview" className="space-y-6">
           <BSVTransactionFeed limit={15} refreshInterval={30000} />

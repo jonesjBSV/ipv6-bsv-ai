@@ -93,8 +93,8 @@ export function ThroughputComparison() {
     { year: '2025', BSV: 1000, BTC: 4.6, ETH: 15 },
     { year: '2026', BSV: 5000, BTC: 4.6, ETH: 20 },
     { year: '2027', BSV: 20000, BTC: 4.6, ETH: 25 },
-    { year: '2028', BSV: 50000, BTC: 4.6, ETH: 30 },
-    { year: '2030', BSV: 100000, BTC: 4.6, ETH: 50 }
+    { year: '2028', BSV: 500000, BTC: 4.6, ETH: 30 },
+    { year: '2030', BSV: 1000000, BTC: 4.6, ETH: 50 }
   ];
 
   const formatTPS = (value: number) => {
@@ -122,25 +122,25 @@ export function ThroughputComparison() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* View Mode Toggle */}
-        <div className="flex gap-2">
+        {/* View Mode Toggle - Mobile Optimized */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:flex sm:gap-2">
           <Button
             variant={viewMode === 'current' ? 'default' : 'outline'}
-            size="sm"
+            className="min-h-[44px] text-sm sm:text-base"
             onClick={() => setViewMode('current')}
           >
             Current TPS
           </Button>
           <Button
             variant={viewMode === 'theoretical' ? 'default' : 'outline'}
-            size="sm"
+            className="min-h-[44px] text-sm sm:text-base"
             onClick={() => setViewMode('theoretical')}
           >
             Theoretical Max
           </Button>
           <Button
             variant={viewMode === 'scaling' ? 'default' : 'outline'}
-            size="sm"
+            className="min-h-[44px] text-sm sm:text-base"
             onClick={() => setViewMode('scaling')}
           >
             Scaling Projection
@@ -150,29 +150,31 @@ export function ThroughputComparison() {
         {/* Current/Theoretical TPS View */}
         {(viewMode === 'current' || viewMode === 'theoretical') && (
           <div className="space-y-4">
-            {/* Live Metrics */}
-            <div className="grid md:grid-cols-3 gap-4">
+            {/* Live Metrics - Mobile Optimized */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
               {throughputData.map((item) => (
-                <div key={item.name} className="p-4 border rounded-lg">
+                <div key={item.name} className="p-3 sm:p-4 border rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
-                    {item.icon}
-                    <span className="font-semibold" style={{ color: item.color }}>
+                    <div className="flex-shrink-0">
+                      {item.icon}
+                    </div>
+                    <span className="font-semibold text-sm sm:text-base" style={{ color: item.color }}>
                       {item.name}
                     </span>
                     {item.name === 'BSV' && viewMode === 'theoretical' && (
-                      <Badge className="bg-green-100 text-green-800">Unlimited</Badge>
+                      <Badge className="bg-green-100 text-green-800 text-xs">Unlimited</Badge>
                     )}
                   </div>
                   
                   <div className="space-y-2">
-                    <div className="text-2xl font-bold" style={{ color: item.color }}>
+                    <div className="text-lg sm:text-xl lg:text-2xl font-bold" style={{ color: item.color }}>
                       {item.name === 'BSV' && viewMode === 'theoretical' ? 
                         '∞' : 
                         formatTPS(animatedValues[item.name] || 0)
                       } TPS
                     </div>
                     
-                    <div className="text-sm text-muted-foreground">
+                    <div className="text-xs sm:text-sm text-muted-foreground">
                       Block: {formatBlockSize(item.blockSize)} / {item.blockTime}s
                     </div>
                     
@@ -182,7 +184,7 @@ export function ThroughputComparison() {
                       className="h-2"
                     />
                     
-                    <div className="text-xs text-muted-foreground">
+                    <div className="text-xs text-muted-foreground break-words">
                       {item.scalability}
                     </div>
                   </div>
@@ -190,18 +192,24 @@ export function ThroughputComparison() {
               ))}
             </div>
 
-            {/* Bar Chart */}
-            <div className="h-64">
+            {/* Bar Chart - Mobile Optimized */}
+            <div className="h-48 sm:h-56 lg:h-64">
               <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={chartData}>
+                <BarChart data={chartData} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="name" />
+                  <XAxis 
+                    dataKey="name" 
+                    tick={{ fontSize: 12 }}
+                    interval={0}
+                  />
                   <YAxis 
                     scale={viewMode === 'theoretical' ? 'log' : 'linear'}
-                    domain={viewMode === 'theoretical' ? [1, 100000] : [0, 'dataMax']}
+                    domain={viewMode === 'theoretical' ? [1, 1000000] : [0, 'dataMax']}
+                    tick={{ fontSize: 11 }}
                   />
                   <Tooltip 
                     formatter={(value: number) => [`${formatTPS(value)} TPS`, 'Throughput']}
+                    contentStyle={{ fontSize: '14px' }}
                   />
                   <Bar 
                     dataKey="theoretical" 
@@ -215,21 +223,26 @@ export function ThroughputComparison() {
           </div>
         )}
 
-        {/* Scaling Projection View */}
+        {/* Scaling Projection View - Mobile Optimized */}
         {viewMode === 'scaling' && (
           <div className="space-y-4">
-            <div className="h-80">
+            <div className="h-56 sm:h-64 lg:h-80">
               <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={scalingFactors}>
+                <LineChart data={scalingFactors} margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
                   <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="year" />
+                  <XAxis 
+                    dataKey="year" 
+                    tick={{ fontSize: 12 }}
+                  />
                   <YAxis 
                     scale="log"
-                    domain={[1, 100000]}
+                    domain={[1, 1000000]}
                     tickFormatter={formatTPS}
+                    tick={{ fontSize: 11 }}
                   />
                   <Tooltip 
                     formatter={(value: number, name: string) => [`${formatTPS(value)} TPS`, name]}
+                    contentStyle={{ fontSize: '14px' }}
                   />
                   <Line 
                     type="monotone" 
@@ -274,54 +287,56 @@ export function ThroughputComparison() {
           </div>
         )}
 
-        {/* Technical Comparison Table */}
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="border-b">
-                <th className="text-left py-2">Blockchain</th>
-                <th className="text-right py-2">Current TPS</th>
-                <th className="text-right py-2">Theoretical Max</th>
-                <th className="text-right py-2">Block Size</th>
-                <th className="text-right py-2">Block Time</th>
-                <th className="text-left py-2">Scaling Method</th>
-              </tr>
-            </thead>
-            <tbody>
-              {throughputData.map((item) => (
-                <tr key={item.name} className="border-b">
-                  <td className="py-2 font-medium" style={{ color: item.color }}>
-                    {item.name}
-                  </td>
-                  <td className="text-right py-2">{formatTPS(item.current)}</td>
-                  <td className="text-right py-2">
-                    {item.name === 'BSV' ? '∞' : formatTPS(item.theoretical)}
-                  </td>
-                  <td className="text-right py-2">{formatBlockSize(item.blockSize)}</td>
-                  <td className="text-right py-2">{item.blockTime}s</td>
-                  <td className="text-left py-2 text-muted-foreground">
-                    {item.scalability}
-                  </td>
+        {/* Technical Comparison Table - Mobile Optimized */}
+        <div className="overflow-x-auto -mx-4 sm:mx-0">
+          <div className="inline-block min-w-full px-4 sm:px-0">
+            <table className="w-full text-xs sm:text-sm">
+              <thead>
+                <tr className="border-b">
+                  <th className="text-left py-2 px-1 min-w-[80px]">Blockchain</th>
+                  <th className="text-right py-2 px-1 min-w-[70px]">Current TPS</th>
+                  <th className="text-right py-2 px-1 min-w-[80px]">Max TPS</th>
+                  <th className="text-right py-2 px-1 min-w-[70px]">Block Size</th>
+                  <th className="text-right py-2 px-1 min-w-[70px]">Block Time</th>
+                  <th className="text-left py-2 px-1 min-w-[120px]">Scaling Method</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {throughputData.map((item) => (
+                  <tr key={item.name} className="border-b">
+                    <td className="py-2 px-1 font-medium" style={{ color: item.color }}>
+                      {item.name}
+                    </td>
+                    <td className="text-right py-2 px-1">{formatTPS(item.current)}</td>
+                    <td className="text-right py-2 px-1">
+                      {item.name === 'BSV' ? '∞' : formatTPS(item.theoretical)}
+                    </td>
+                    <td className="text-right py-2 px-1">{formatBlockSize(item.blockSize)}</td>
+                    <td className="text-right py-2 px-1">{item.blockTime}s</td>
+                    <td className="text-left py-2 px-1 text-muted-foreground">
+                      <span className="break-words">{item.scalability}</span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        {/* Key Insights */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <div className="p-4 bg-green-50 rounded-lg">
-            <h4 className="font-semibold text-green-800 mb-2">BSV Advantages</h4>
-            <ul className="space-y-1 text-sm text-green-700">
+        {/* Key Insights - Mobile Optimized */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          <div className="p-3 sm:p-4 bg-green-50 rounded-lg">
+            <h4 className="font-semibold text-green-800 mb-2 text-sm sm:text-base">BSV Advantages</h4>
+            <ul className="space-y-1 text-xs sm:text-sm text-green-700">
               <li>• 1000x more scalable than BTC</li>
               <li>• Unlimited theoretical throughput</li>
               <li>• Perfect for AI microtransactions</li>
               <li>• IPv6-native architecture</li>
             </ul>
           </div>
-          <div className="p-4 bg-blue-50 rounded-lg">
-            <h4 className="font-semibold text-blue-800 mb-2">AI Application Impact</h4>
-            <ul className="space-y-1 text-sm text-blue-700">
+          <div className="p-3 sm:p-4 bg-blue-50 rounded-lg">
+            <h4 className="font-semibold text-blue-800 mb-2 text-sm sm:text-base">AI Application Impact</h4>
+            <ul className="space-y-1 text-xs sm:text-sm text-blue-700">
               <li>• Real-time AI model payments</li>
               <li>• High-frequency data transactions</li>
               <li>• Scalable IoT device networks</li>

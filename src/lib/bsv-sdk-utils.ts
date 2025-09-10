@@ -129,13 +129,13 @@ class ARCClient {
     return null;
   }
 
-  private formatTransaction(data: any): BSVTransaction {
+  private formatTransaction(data: Record<string, unknown>): BSVTransaction {
     return {
       txid: data.txid,
       size: data.size || 0,
       fee: data.fee || 0,
       timestamp: data.timestamp || Date.now() / 1000,
-      inputs: data.inputs?.map((input: any) => ({
+      inputs: data.inputs?.map((input: Record<string, unknown>) => ({
         txid: input.txid,
         vout: input.vout,
         sequence: input.sequence,
@@ -143,7 +143,7 @@ class ARCClient {
         address: input.address,
         satoshis: input.satoshis || 0
       })) || [],
-      outputs: data.outputs?.map((output: any) => ({
+      outputs: data.outputs?.map((output: Record<string, unknown>) => ({
         satoshis: output.satoshis || 0,
         lockingScript: output.lockingScript || '', // Using proper BSV term
         address: output.address,
@@ -410,7 +410,7 @@ export function generateMicropaymentExamples() {
 export function calculateThroughputMetrics() {
   return {
     bsv: {
-      theoreticalTPS: 100000, // Theoretical unlimited
+      theoreticalTPS: 1000000, // Teranode proven capability
       currentTPS: 300, // Current average
       blockSize: 4000000000, // 4GB theoretical limit
       avgBlockTime: 600, // 10 minutes in seconds
@@ -441,7 +441,7 @@ export function demonstrateUnlimitedScaling() {
   return {
     currentCapabilities: {
       maxBlockSize: '4GB+',
-      transactionsPerSecond: 100000,
+      transactionsPerSecond: 1000000,
       dataStoragePerTx: 'Unlimited',
       feePerMB: '$0.05'
     },

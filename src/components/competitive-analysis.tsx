@@ -155,7 +155,7 @@ export function CompetitiveAnalysis() {
     {
       aspect: 'Transaction Throughput',
       currentSolutions: 15,
-      bsvSolution: 100000,
+      bsvSolution: 1000000,
       unit: 'TPS'
     },
     {

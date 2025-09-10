@@ -101,30 +101,30 @@ export function FeeComparisonCalculator() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
-        {/* Controls */}
-        <div className="grid md:grid-cols-2 gap-4">
+        {/* Controls - Mobile Optimized */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label className="block text-sm sm:text-base font-medium mb-2">
               Transaction Value (USD)
             </label>
             <input
               type="number"
               value={transactionValue}
               onChange={(e) => setTransactionValue(Number(e.target.value))}
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-4 py-3 sm:py-2 border rounded-md text-base sm:text-sm min-h-[44px]"
               step="0.01"
               min="0.01"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">
+            <label className="block text-sm sm:text-base font-medium mb-2">
               Transaction Size (bytes)
             </label>
             <input
               type="number"
               value={transactionSize}
               onChange={(e) => setTransactionSize(Number(e.target.value))}
-              className="w-full px-3 py-2 border rounded-md"
+              className="w-full px-4 py-3 sm:py-2 border rounded-md text-base sm:text-sm min-h-[44px]"
               step="1"
               min="150"
               max="1000"
@@ -132,15 +132,15 @@ export function FeeComparisonCalculator() {
           </div>
         </div>
 
-        {/* Preset Buttons */}
+        {/* Preset Buttons - Mobile Optimized */}
         <div>
-          <label className="block text-sm font-medium mb-2">Quick Presets:</label>
-          <div className="flex flex-wrap gap-2">
+          <label className="block text-sm sm:text-base font-medium mb-3">Quick Presets:</label>
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 sm:gap-3">
             {presetValues.map((preset) => (
               <Button
                 key={preset.label}
                 variant="outline"
-                size="sm"
+                className="min-h-[44px] text-sm sm:text-base px-3 sm:px-4"
                 onClick={() => {
                   setTransactionValue(preset.value);
                   setTransactionSize(preset.size);
@@ -152,48 +152,48 @@ export function FeeComparisonCalculator() {
           </div>
         </div>
 
-        {/* Results */}
+        {/* Results - Mobile Optimized */}
         <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h3 className="text-lg font-semibold">Fee Comparison Results</h3>
-            <Badge variant="outline" className="text-green-600">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <h3 className="text-base sm:text-lg font-semibold">Fee Comparison Results</h3>
+            <Badge variant="outline" className="text-green-600 text-xs sm:text-sm self-start sm:self-auto">
               BSV saves {formatUSD(savings)} ({savingsPercentage.toFixed(1)}%)
             </Badge>
           </div>
 
           {calculations.map((calc) => (
-            <div key={calc.blockchain} className="p-4 border rounded-lg">
-              <div className="flex items-center justify-between mb-3">
+            <div key={calc.blockchain} className="p-3 sm:p-4 border rounded-lg">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-3 gap-2">
                 <div className="flex items-center gap-2">
                   {calc.icon}
-                  <span className={`font-semibold ${calc.color}`}>
+                  <span className={`font-semibold ${calc.color} text-sm sm:text-base`}>
                     {calc.blockchain}
                   </span>
                   {calc.blockchain === getBestOption().blockchain && (
-                    <Badge className="bg-green-100 text-green-800">Best</Badge>
+                    <Badge className="bg-green-100 text-green-800 text-xs">Best</Badge>
                   )}
                   {calc.blockchain === getWorstOption().blockchain && (
-                    <Badge variant="destructive">Most Expensive</Badge>
+                    <Badge variant="destructive" className="text-xs">Most Expensive</Badge>
                   )}
                 </div>
-                <div className="text-right">
-                  <div className={`text-lg font-bold ${calc.color}`}>
+                <div className="text-left sm:text-right">
+                  <div className={`text-base sm:text-lg font-bold ${calc.color}`}>
                     {formatUSD(calc.fee)}
                   </div>
-                  <div className="text-sm text-muted-foreground">
+                  <div className="text-xs sm:text-sm text-muted-foreground">
                     {calc.time < 1 ? `${(calc.time * 60).toFixed(0)}s` : `${calc.time}min`}
                   </div>
                 </div>
               </div>
 
               <div className="space-y-2">
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-xs sm:text-sm">
                   <span>Cost as % of transaction:</span>
                   <span className={calc.color}>
                     {((calc.fee / transactionValue) * 100).toFixed(3)}%
                   </span>
                 </div>
-                <div className="flex justify-between text-sm">
+                <div className="flex justify-between text-xs sm:text-sm">
                   <span>Efficiency Score:</span>
                   <span>{calc.efficiency.toFixed(0)}/100</span>
                 </div>
@@ -221,22 +221,22 @@ export function FeeComparisonCalculator() {
           </ul>
         </div>
 
-        {/* Technical Details */}
-        <div className="grid md:grid-cols-3 gap-4 text-sm">
-          <div className="text-center p-3 bg-green-50 rounded-lg">
-            <div className="font-semibold text-green-800">BSV Network</div>
-            <div className="text-green-600">0.05 sat/byte</div>
-            <div className="text-green-600">~30 second confirmation</div>
+        {/* Technical Details - Mobile Optimized */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm">
+          <div className="text-center p-3 sm:p-4 bg-green-50 rounded-lg">
+            <div className="font-semibold text-green-800 text-sm sm:text-base">BSV Network</div>
+            <div className="text-green-600 text-xs sm:text-sm">0.05 sat/byte</div>
+            <div className="text-green-600 text-xs sm:text-sm">~30 second confirmation</div>
           </div>
-          <div className="text-center p-3 bg-orange-50 rounded-lg">
-            <div className="font-semibold text-orange-800">BTC Network</div>
-            <div className="text-orange-600">~50 sat/byte</div>
-            <div className="text-orange-600">~60 minute confirmation</div>
+          <div className="text-center p-3 sm:p-4 bg-orange-50 rounded-lg">
+            <div className="font-semibold text-orange-800 text-sm sm:text-base">BTC Network</div>
+            <div className="text-orange-600 text-xs sm:text-sm">~50 sat/byte</div>
+            <div className="text-orange-600 text-xs sm:text-sm">~60 minute confirmation</div>
           </div>
-          <div className="text-center p-3 bg-blue-50 rounded-lg">
-            <div className="font-semibold text-blue-800">ETH Network</div>
-            <div className="text-blue-600">~30 gwei gas</div>
-            <div className="text-blue-600">~5 minute confirmation</div>
+          <div className="text-center p-3 sm:p-4 bg-blue-50 rounded-lg">
+            <div className="font-semibold text-blue-800 text-sm sm:text-base">ETH Network</div>
+            <div className="text-blue-600 text-xs sm:text-sm">~30 gwei gas</div>
+            <div className="text-blue-600 text-xs sm:text-sm">~5 minute confirmation</div>
           </div>
         </div>
       </CardContent>

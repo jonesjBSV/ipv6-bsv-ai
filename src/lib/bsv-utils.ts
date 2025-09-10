@@ -19,7 +19,7 @@
 class APIRateLimiter {
   private requestTimes: number[] = [];
   private readonly maxRequestsPerSecond = 2; // Conservative limit below 3/sec
-  private cache = new Map<string, { data: any; timestamp: number }>();
+  private cache = new Map<string, { data: unknown; timestamp: number }>();
   private readonly cacheTimeout = 30000; // 30 seconds
 
   async throttledFetch(url: string, options?: RequestInit): Promise<Response> {
@@ -374,7 +374,7 @@ export function generateMicropaymentExamples(): MicropaymentExample[] {
 export function calculateThroughputMetrics() {
   return {
     bsv: {
-      theoreticalTPS: 100000, // Theoretical unlimited
+      theoreticalTPS: 1000000, // Teranode proven capability
       currentTPS: 300, // Current average
       blockSize: 4000000000, // 4GB theoretical limit
       avgBlockTime: 600, // 10 minutes in seconds
