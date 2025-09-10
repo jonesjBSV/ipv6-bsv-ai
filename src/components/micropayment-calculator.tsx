@@ -10,7 +10,7 @@ import { Calculator, DollarSign, Zap, TrendingUp, AlertCircle, CheckCircle, Info
 import { generateMicropaymentExamples } from '@/lib/bsv-sdk-utils';
 
 const formatUSD = (amount: number) => {
-  return `$${amount.toFixed(6)}`;
+  return `$${amount.toFixed(2)}`;
 };
 
 interface UseCase {
