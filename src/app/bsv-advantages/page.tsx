@@ -1,5 +1,3 @@
-import { FeeComparisonCalculator } from "@/components/fee-comparison-calculator";
-import { ThroughputComparison } from "@/components/throughput-comparison";
 import { BSVDashboard } from "@/components/bsv-dashboard";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -46,32 +44,6 @@ export default function BSVAdvantagesPage() {
                 <Badge variant="outline" className="mt-2 text-xs">Fractions of cents</Badge>
               </div>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Live Fee Comparison */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Live Fee Comparison</CardTitle>
-            <CardDescription>
-              Real-time transaction costs across major blockchain networks
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <FeeComparisonCalculator />
-          </CardContent>
-        </Card>
-
-        {/* Throughput Analysis */}
-        <Card>
-          <CardHeader>
-            <CardTitle>Throughput & Scalability</CardTitle>
-            <CardDescription>
-              Transaction capacity and confirmation times comparison
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ThroughputComparison />
           </CardContent>
         </Card>
 

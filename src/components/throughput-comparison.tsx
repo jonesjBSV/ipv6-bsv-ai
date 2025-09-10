@@ -17,7 +17,7 @@ interface ThroughputMetric {
   blockTime: number;
   scalability: string;
   color: string;
-  icon: React.ReactNode;
+  icon: string; // Store icon name as string instead of JSX element
 }
 
 export function ThroughputComparison() {
@@ -25,7 +25,20 @@ export function ThroughputComparison() {
   const [animatedValues, setAnimatedValues] = useState<Record<string, number>>({});
   const [showMethodology, setShowMethodology] = useState(false);
   
-  const metrics = calculateThroughputMetrics();
+  const metrics = useMemo(() => calculateThroughputMetrics(), []);
+
+  // Icon mapping function to render JSX from icon names
+  const renderIcon = (iconName: string) => {
+    const iconProps = { className: "h-4 w-4" };
+    switch (iconName) {
+      case 'Infinity': return <Infinity {...iconProps} />;
+      case 'Zap': return <Zap {...iconProps} />;
+      case 'TrendingUp': return <TrendingUp {...iconProps} />;
+      case 'Globe': return <Globe {...iconProps} />;
+      case 'Server': return <Server {...iconProps} />;
+      default: return <Server {...iconProps} />; // Fallback icon
+    }
+  };
 
   const throughputData: ThroughputMetric[] = useMemo(() => [
     {
@@ -36,17 +49,27 @@ export function ThroughputComparison() {
       blockTime: metrics.bsv.avgBlockTime,
       scalability: metrics.bsv.scalability,
       color: '#22c55e',
-      icon: <Infinity className="h-4 w-4" />
+      icon: 'Infinity'
     },
     {
-      name: 'BTC',
-      current: metrics.btc.currentTPS,
-      theoretical: metrics.btc.theoreticalTPS,
-      blockSize: metrics.btc.blockSize,
-      blockTime: metrics.btc.avgBlockTime,
-      scalability: metrics.btc.scalability,
-      color: '#f97316',
-      icon: <Server className="h-4 w-4" />
+      name: 'SOL',
+      current: metrics.sol.currentTPS,
+      theoretical: metrics.sol.theoreticalTPS,
+      blockSize: metrics.sol.blockSize,
+      blockTime: metrics.sol.avgBlockTime,
+      scalability: metrics.sol.scalability,
+      color: '#8b5cf6',
+      icon: 'Zap'
+    },
+    {
+      name: 'BCH',
+      current: metrics.bch.currentTPS,
+      theoretical: metrics.bch.theoreticalTPS,
+      blockSize: metrics.bch.blockSize,
+      blockTime: metrics.bch.avgBlockTime,
+      scalability: metrics.bch.scalability,
+      color: '#10b981',
+      icon: 'TrendingUp'
     },
     {
       name: 'ETH',
@@ -56,7 +79,17 @@ export function ThroughputComparison() {
       blockTime: metrics.eth.avgBlockTime,
       scalability: metrics.eth.scalability,
       color: '#3b82f6',
-      icon: <Globe className="h-4 w-4" />
+      icon: 'Globe'
+    },
+    {
+      name: 'BTC',
+      current: metrics.btc.currentTPS,
+      theoretical: metrics.btc.theoreticalTPS,
+      blockSize: metrics.btc.blockSize,
+      blockTime: metrics.btc.avgBlockTime,
+      scalability: metrics.btc.scalability,
+      color: '#f97316',
+      icon: 'Server'
     }
   ], [metrics]);
 
@@ -65,6 +98,8 @@ export function ThroughputComparison() {
     const timer = setInterval(() => {
       setAnimatedValues(prev => {
         const newValues = { ...prev };
+        let hasChanges = false;
+        
         throughputData.forEach(item => {
           const targetValue = viewMode === 'current' ? item.current : item.theoretical;
           const currentValue = newValues[item.name] || 0;
@@ -72,14 +107,19 @@ export function ThroughputComparison() {
           
           if (currentValue < targetValue) {
             newValues[item.name] = Math.min(targetValue, currentValue + step);
+            hasChanges = true;
+          } else if (currentValue > targetValue || currentValue === 0) {
+            newValues[item.name] = targetValue; // Set to exact target
+            hasChanges = true;
           }
         });
-        return newValues;
+        
+        return hasChanges ? newValues : prev;
       });
     }, 100);
 
     return () => clearInterval(timer);
-  }, [viewMode, throughputData]);
+  }, [viewMode, throughputData]); // Include throughputData since it's referenced in the effect
 
   const chartData = throughputData.map(item => ({
     name: item.name,
@@ -90,12 +130,12 @@ export function ThroughputComparison() {
   }));
 
   const scalingFactors = [
-    { year: '2024', BSV: 300, BTC: 4.6, ETH: 12 },
-    { year: '2025', BSV: 1000, BTC: 4.6, ETH: 15 },
-    { year: '2026', BSV: 5000, BTC: 4.6, ETH: 20 },
-    { year: '2027', BSV: 20000, BTC: 4.6, ETH: 25 },
-    { year: '2028', BSV: 500000, BTC: 4.6, ETH: 30 },
-    { year: '2030', BSV: 1000000, BTC: 4.6, ETH: 50 }
+    { year: '2024', BSV: 6000, BTC: 4.6, ETH: 12, SOL: 3000, BCH: 200 },
+    { year: '2025', BSV: 15000, BTC: 4.6, ETH: 15, SOL: 4000, BCH: 250 },
+    { year: '2026', BSV: 50000, BTC: 4.6, ETH: 20, SOL: 5000, BCH: 300 },
+    { year: '2027', BSV: 200000, BTC: 4.6, ETH: 25, SOL: 6000, BCH: 350 },
+    { year: '2028', BSV: 500000, BTC: 4.6, ETH: 30, SOL: 8000, BCH: 400 },
+    { year: '2030', BSV: 1000000, BTC: 4.6, ETH: 50, SOL: 10000, BCH: 500 }
   ];
 
   const formatTPS = (value: number) => {
@@ -181,7 +221,7 @@ export function ThroughputComparison() {
                 <div key={item.name} className="p-3 sm:p-4 border rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="flex-shrink-0">
-                      {item.icon}
+                      {renderIcon(item.icon)}
                     </div>
                     <span className="font-semibold text-sm sm:text-base" style={{ color: item.color }}>
                       {item.name}
@@ -198,7 +238,7 @@ export function ThroughputComparison() {
                     <div className="text-lg sm:text-xl lg:text-2xl font-bold" style={{ color: item.color }}>
                       {item.name === 'BSV' && viewMode === 'theoretical' ? 
                         '∞' : 
-                        formatTPS(animatedValues[item.name] || 0)
+                        formatTPS(animatedValues[item.name] || (viewMode === 'current' ? item.current : item.theoretical))
                       } TPS
                     </div>
                     
@@ -294,6 +334,22 @@ export function ThroughputComparison() {
                     strokeWidth={2}
                     strokeDasharray="3 3"
                     dot={{ fill: '#3b82f6', strokeWidth: 2, r: 3 }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="SOL" 
+                    stroke="#8b5cf6" 
+                    strokeWidth={2}
+                    strokeDasharray="2 4"
+                    dot={{ fill: '#8b5cf6', strokeWidth: 2, r: 3 }}
+                  />
+                  <Line 
+                    type="monotone" 
+                    dataKey="BCH" 
+                    stroke="#10b981" 
+                    strokeWidth={2}
+                    strokeDasharray="4 2"
+                    dot={{ fill: '#10b981', strokeWidth: 2, r: 3 }}
                   />
                 </LineChart>
               </ResponsiveContainer>

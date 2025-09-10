@@ -30,22 +30,32 @@ export function FeeComparisonCalculator() {
     const bsvFee = (feeData.bsv.satoshisPerByte * transactionSize) * 0.0000005; // Convert to USD
     const btcFee = (feeData.btc.satoshisPerByte * transactionSize) * 0.0005; // Convert to USD (higher rate)
     const ethFee = feeData.eth.usdPerTransaction; // Fixed USD amount
+    const solFee = feeData.sol.usdPerTransaction; // Fixed USD amount
+    const bchFee = (feeData.bch.satoshisPerByte * transactionSize) * 0.00001; // Convert to USD
 
     return [
       {
         blockchain: 'BSV',
         fee: bsvFee,
         time: feeData.bsv.confirmationTime,
-        efficiency: Math.max(95 - (bsvFee / transactionValue) * 100, 10),
+        efficiency: Math.max(98 - (bsvFee / transactionValue) * 100, 10),
         color: 'text-green-600',
         icon: <Zap className="h-4 w-4" />
       },
       {
-        blockchain: 'BTC',
-        fee: btcFee,
-        time: feeData.btc.confirmationTime,
-        efficiency: Math.max(20 - (btcFee / transactionValue) * 10, 5),
-        color: 'text-orange-600',
+        blockchain: 'SOL',
+        fee: solFee,
+        time: feeData.sol.confirmationTime,
+        efficiency: Math.max(75 - (solFee / transactionValue) * 200, 15),
+        color: 'text-purple-600',
+        icon: <AlertTriangle className="h-4 w-4" />
+      },
+      {
+        blockchain: 'BCH',
+        fee: bchFee,
+        time: feeData.bch.confirmationTime,
+        efficiency: Math.max(70 - (bchFee / transactionValue) * 50, 20),
+        color: 'text-yellow-600',
         icon: <Clock className="h-4 w-4" />
       },
       {
@@ -55,6 +65,14 @@ export function FeeComparisonCalculator() {
         efficiency: Math.max(40 - (ethFee / transactionValue) * 8, 10),
         color: 'text-blue-600',
         icon: <AlertTriangle className="h-4 w-4" />
+      },
+      {
+        blockchain: 'BTC',
+        fee: btcFee,
+        time: feeData.btc.confirmationTime,
+        efficiency: Math.max(20 - (btcFee / transactionValue) * 10, 5),
+        color: 'text-orange-600',
+        icon: <Clock className="h-4 w-4" />
       }
     ];
   }, [transactionValue, transactionSize, feeData]);
@@ -97,7 +115,7 @@ export function FeeComparisonCalculator() {
           Transaction Fee Comparison Calculator
         </CardTitle>
         <CardDescription>
-          Compare real-world transaction costs across BSV, BTC, and ETH networks
+          Compare real-world transaction costs across BSV, SOL, BCH, ETH, and BTC networks
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
@@ -222,21 +240,31 @@ export function FeeComparisonCalculator() {
         </div>
 
         {/* Technical Details - Mobile Optimized */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4 text-xs sm:text-sm">
           <div className="text-center p-3 sm:p-4 bg-green-50 rounded-lg">
             <div className="font-semibold text-green-800 text-sm sm:text-base">BSV Network</div>
-            <div className="text-green-600 text-xs sm:text-sm">0.05 sat/byte</div>
-            <div className="text-green-600 text-xs sm:text-sm">~30 second confirmation</div>
+            <div className="text-green-600 text-xs sm:text-sm">0.5 sat/byte</div>
+            <div className="text-green-600 text-xs sm:text-sm">Instant confirmation</div>
           </div>
-          <div className="text-center p-3 sm:p-4 bg-orange-50 rounded-lg">
-            <div className="font-semibold text-orange-800 text-sm sm:text-base">BTC Network</div>
-            <div className="text-orange-600 text-xs sm:text-sm">~50 sat/byte</div>
-            <div className="text-orange-600 text-xs sm:text-sm">~60 minute confirmation</div>
+          <div className="text-center p-3 sm:p-4 bg-purple-50 rounded-lg">
+            <div className="font-semibold text-purple-800 text-sm sm:text-base">SOL Network</div>
+            <div className="text-purple-600 text-xs sm:text-sm">5000 lamports</div>
+            <div className="text-purple-600 text-xs sm:text-sm">~24 second finality</div>
+          </div>
+          <div className="text-center p-3 sm:p-4 bg-yellow-50 rounded-lg">
+            <div className="font-semibold text-yellow-800 text-sm sm:text-base">BCH Network</div>
+            <div className="text-yellow-600 text-xs sm:text-sm">1.0 sat/byte</div>
+            <div className="text-yellow-600 text-xs sm:text-sm">~10 minute confirmation</div>
           </div>
           <div className="text-center p-3 sm:p-4 bg-blue-50 rounded-lg">
             <div className="font-semibold text-blue-800 text-sm sm:text-base">ETH Network</div>
             <div className="text-blue-600 text-xs sm:text-sm">~30 gwei gas</div>
             <div className="text-blue-600 text-xs sm:text-sm">~5 minute confirmation</div>
+          </div>
+          <div className="text-center p-3 sm:p-4 bg-orange-50 rounded-lg">
+            <div className="font-semibold text-orange-800 text-sm sm:text-base">BTC Network</div>
+            <div className="text-orange-600 text-xs sm:text-sm">~50 sat/byte</div>
+            <div className="text-orange-600 text-xs sm:text-sm">~60 minute confirmation</div>
           </div>
         </div>
       </CardContent>
