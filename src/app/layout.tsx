@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "AI requires Blockchain requires IPv6 - Technical Presentation",
   description: "Interactive presentation exploring the interdependent technologies shaping our digital future",
+  viewport: "width=device-width, initial-scale=1, maximum-scale=5",
 };
 
 export default function RootLayout({
@@ -31,7 +32,7 @@ export default function RootLayout({
       >
         <PresentationNav />
         <SectionSidebar />
-        <main className="ml-64 pt-16 min-h-screen">
+        <main className="pt-16 min-h-screen lg:ml-64 transition-all duration-300">
           {children}
         </main>
       </body>

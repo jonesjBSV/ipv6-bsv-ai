@@ -31,7 +31,7 @@ export default function SectionSidebar() {
   const pathname = usePathname()
 
   return (
-    <div className="fixed left-0 top-16 bottom-0 w-64 bg-card border-r overflow-y-auto">
+    <div className="hidden lg:block fixed left-0 top-16 bottom-0 w-64 bg-card border-r overflow-y-auto z-40">
       <div className="p-4">
         <h2 className="font-semibold text-lg mb-4">Presentation Sections</h2>
         <nav className="space-y-2">
