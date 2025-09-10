@@ -232,15 +232,15 @@ export default function TrustCrisisVisualization() {
                     <ul className="text-blue-700 mt-1 space-y-1 text-xs">
                       <li>• Edelman Trust Barometer Global Report (2018-2024) - Media trust metrics</li>
                       <li>• Reuters Institute Digital News Report (2018-2024) - Trust in online content</li>
-                      <li>• Pew Research Center: "Americans and Digital Content Trust" (2020, 2022, 2024)</li>
-                      <li>• Knight Foundation: "Trust in Media and Democracy" annual surveys</li>
+                      <li>• Pew Research Center: &quot;Americans and Digital Content Trust&quot; (2020, 2022, 2024)</li>
+                      <li>• Knight Foundation: &quot;Trust in Media and Democracy&quot; annual surveys</li>
                     </ul>
                   </div>
                   <div>
                     <strong className="text-blue-800">AI Detection Accuracy:</strong>
                     <ul className="text-blue-700 mt-1 space-y-1 text-xs">
                       <li>• Facebook AI Research: Deepfake Detection Challenge results (2019-2024)</li>
-                      <li>• "The DeepFake-o-meter: An Open Platform for DeepFake Detection" (ACM MM 2021)</li>
+                      <li>• &quot;The DeepFake-o-meter: An Open Platform for DeepFake Detection&quot; (ACM MM 2021)</li>
                       <li>• Reality Defender accuracy reports and benchmarks (2020-2024)</li>
                       <li>• Microsoft Video Authenticator performance studies (2020-2024)</li>
                     </ul>
@@ -248,10 +248,10 @@ export default function TrustCrisisVisualization() {
                   <div>
                     <strong className="text-blue-800">Human Detection Ability:</strong>
                     <ul className="text-blue-700 mt-1 space-y-1 text-xs">
-                      <li>• Köhler, C. et al. "Perceived Trustworthiness of Deepfakes" (CHI 2021)</li>
-                      <li>• "Humans vs. AI: An Analysis of Human Performance" (IEEE Security 2022)</li>
-                      <li>• University of Washington: "Human Perception of Synthetic Media" studies (2019-2024)</li>
-                      <li>• Stanford HAI: "Human-AI Interaction in Deepfake Detection" (2023)</li>
+                      <li>• Köhler, C. et al. &quot;Perceived Trustworthiness of Deepfakes&quot; (CHI 2021)</li>
+                      <li>• &quot;Humans vs. AI: An Analysis of Human Performance&quot; (IEEE Security 2022)</li>
+                      <li>• University of Washington: &quot;Human Perception of Synthetic Media&quot; studies (2019-2024)</li>
+                      <li>• Stanford HAI: &quot;Human-AI Interaction in Deepfake Detection&quot; (2023)</li>
                     </ul>
                   </div>
                 </div>
