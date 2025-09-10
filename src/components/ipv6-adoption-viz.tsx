@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -158,36 +158,101 @@ export default function IPv6AdoptionVisualization() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart data={topCountries} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" className="stroke-muted" />
-              <XAxis 
-                dataKey="country" 
-                className="text-muted-foreground"
-                angle={-45}
-                textAnchor="end"
-                height={80}
-              />
-              <YAxis 
-                domain={[0, 80]} 
-                className="text-muted-foreground"
-                label={{ value: 'Adoption %', angle: -90, position: 'insideLeft' }}
-              />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: 'hsl(var(--card))',
-                  border: '1px solid hsl(var(--border))',
-                  borderRadius: '6px'
-                }}
-                formatter={(value: number) => [`${value}%`, 'IPv6 Adoption']}
-              />
-              <Bar 
-                dataKey="adoption" 
-                fill="hsl(var(--primary))" 
-                radius={[4, 4, 0, 0]}
-              />
-            </BarChart>
-          </ResponsiveContainer>
+          <div className="h-80 sm:h-96">
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart 
+                data={topCountries} 
+                margin={{ top: 20, right: 30, left: 40, bottom: 80 }}
+              >
+                <defs>
+                  <linearGradient id="highAdoption" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#22c55e" stopOpacity={0.9}/>
+                    <stop offset="100%" stopColor="#16a34a" stopOpacity={0.7}/>
+                  </linearGradient>
+                  <linearGradient id="mediumAdoption" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#f59e0b" stopOpacity={0.9}/>
+                    <stop offset="100%" stopColor="#d97706" stopOpacity={0.7}/>
+                  </linearGradient>
+                  <linearGradient id="lowAdoption" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#ef4444" stopOpacity={0.9}/>
+                    <stop offset="100%" stopColor="#dc2626" stopOpacity={0.7}/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid 
+                  strokeDasharray="3 3" 
+                  stroke="hsl(var(--muted-foreground))" 
+                  strokeOpacity={0.3}
+                />
+                <XAxis 
+                  dataKey="country" 
+                  tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
+                  angle={-45}
+                  textAnchor="end"
+                  height={80}
+                  interval={0}
+                />
+                <YAxis 
+                  domain={[0, 80]} 
+                  tick={{ fontSize: 12, fill: 'hsl(var(--muted-foreground))' }}
+                  label={{ 
+                    value: 'IPv6 Adoption %', 
+                    angle: -90, 
+                    position: 'insideLeft',
+                    style: { textAnchor: 'middle', fill: 'hsl(var(--muted-foreground))' }
+                  }}
+                />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                    border: '1px solid hsl(var(--border))',
+                    borderRadius: '8px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                    padding: '12px'
+                  }}
+                  labelStyle={{
+                    color: 'hsl(var(--foreground))',
+                    fontWeight: 'bold',
+                    marginBottom: '4px'
+                  }}
+                  formatter={(value: number) => [
+                    `${value}%`, 
+                    'IPv6 Adoption'
+                  ]}
+                />
+                <Bar 
+                  dataKey="adoption" 
+                  radius={[6, 6, 0, 0]}
+                  stroke="rgba(255,255,255,0.2)"
+                  strokeWidth={1}
+                >
+                  {topCountries.map((entry, index) => (
+                    <Cell 
+                      key={`cell-${index}`}
+                      fill={entry.adoption >= 60 ? 'url(#highAdoption)' : 
+                            entry.adoption >= 30 ? 'url(#mediumAdoption)' : 
+                            'url(#lowAdoption)'}
+                    />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          
+          {/* Legend */}
+          <div className="flex justify-center gap-6 mt-4 text-sm">
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-sm bg-gradient-to-b from-green-500 to-green-600"></div>
+              <span className="text-muted-foreground">High Adoption (≥60%)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-sm bg-gradient-to-b from-amber-500 to-amber-600"></div>
+              <span className="text-muted-foreground">Medium Adoption (30-59%)</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="w-3 h-3 rounded-sm bg-gradient-to-b from-red-500 to-red-600"></div>
+              <span className="text-muted-foreground">Low Adoption (&lt;30%)</span>
+            </div>
+          </div>
         </CardContent>
       </Card>
 

@@ -12,6 +12,7 @@ export default function AIGrowthChart() {
   const [metrics, setMetrics] = useState<AIMetrics | null>(null);
   const [loading, setLoading] = useState(true);
   const [showMethodology, setShowMethodology] = useState(false);
+  const [showChartSources, setShowChartSources] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
@@ -179,6 +180,62 @@ export default function AIGrowthChart() {
               />
             </LineChart>
           </ResponsiveContainer>
+          
+          {/* Data Sources Section for Chart */}
+          <div className="mt-6 border-t pt-6">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowChartSources(!showChartSources)}
+              className="flex items-center gap-2 mb-4"
+            >
+              {showChartSources ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+              {showChartSources ? 'Hide' : 'Show'} Chart Data Sources
+            </Button>
+
+            {showChartSources && (
+              <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <h5 className="font-semibold text-blue-800 mb-3 flex items-center gap-2">
+                  <Info className="h-4 w-4" />
+                  AI Growth Timeline Data Sources
+                </h5>
+                <div className="space-y-3 text-sm">
+                  <div>
+                    <strong className="text-blue-800">ChatGPT Users:</strong>
+                    <ul className="text-blue-700 mt-1 space-y-1 text-xs">
+                      <li>• OpenAI quarterly earnings calls and official user statistics releases</li>
+                      <li>• Similarweb third-party web analytics for independent usage validation</li>
+                      <li>• App Annie mobile app usage statistics for ChatGPT mobile applications</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <strong className="text-blue-800">AI Investment:</strong>
+                    <ul className="text-blue-700 mt-1 space-y-1 text-xs">
+                      <li>• PitchBook venture capital database tracking AI startup funding rounds</li>
+                      <li>• CB Insights market intelligence on AI investment trends and valuations</li>
+                      <li>• Crunchbase company funding database with AI sector categorization</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <strong className="text-blue-800">AI Models Released:</strong>
+                    <ul className="text-blue-700 mt-1 space-y-1 text-xs">
+                      <li>• Papers With Code research publication and benchmark tracking database</li>
+                      <li>• Hugging Face open source model repository download statistics</li>
+                      <li>• Official announcements from OpenAI, Google, Anthropic, and Meta</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <strong className="text-blue-800">Processing Power Growth:</strong>
+                    <ul className="text-blue-700 mt-1 space-y-1 text-xs">
+                      <li>• NVIDIA GPU sales and data center deployment statistics</li>
+                      <li>• AWS, Google Cloud, Azure AI compute usage reports</li>
+                      <li>• TOP500 supercomputer list tracking AI/ML workload allocation</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
         </CardContent>
       </Card>
 
