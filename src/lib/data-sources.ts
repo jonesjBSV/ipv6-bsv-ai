@@ -138,7 +138,7 @@ export async function getDataExploitationStats(): Promise<DataExploitationStats>
 }
 
 // Chart data formatters for visualizations
-export function formatAIGrowthData(_metrics: AIMetrics) {
+export function formatAIGrowthData() {
   return [
     { year: 2020, users: 0, investment: 50, models: 10 },
     { year: 2021, users: 0, investment: 75, models: 25 },
@@ -156,7 +156,7 @@ export function formatIPv6AdoptionData(stats: IPv6Stats) {
   }));
 }
 
-export function formatTrustDeclineData(_metrics: DeepfakeMetrics) {
+export function formatTrustDeclineData() {
   return [
     { year: 2018, trust: 78, detection: 95, human: 85 },
     { year: 2019, trust: 74, detection: 92, human: 82 },

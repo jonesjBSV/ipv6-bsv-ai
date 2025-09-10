@@ -6,7 +6,8 @@ import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { Progress } from './ui/progress';
 import { CheckCircle, Shield, Zap, Download, Hash, Clock } from 'lucide-react';
-import { createSPVProof, verifySPVProof } from '@/lib/bsv-sdk-utils';
+// Import SPV utilities (commented out as they're not currently used in the demo)
+// import { createSPVProof, verifySPVProof } from '@/lib/bsv-sdk-utils';
 
 interface VerificationStep {
   id: string;
@@ -22,7 +23,6 @@ const simulateSPVVerification = () => {
   const mockNodes = Array(8).fill(0).map(() => 
     '0x' + Array(62).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join('')
   );
-  const mockBlockHash = '0x' + Array(62).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join('');
   const mockMerkleRoot = '0x' + Array(62).fill(0).map(() => Math.floor(Math.random() * 16).toString(16)).join('');
   
   return {

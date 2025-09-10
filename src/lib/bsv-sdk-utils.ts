@@ -29,6 +29,28 @@ const ARC_ENDPOINTS = {
 const NETWORK = 'testnet';
 const DEPLOYMENT_ID = '00000000';
 
+// API Response interface for proper typing
+interface TransactionAPIResponse {
+  txid: string;
+  size?: number;
+  fee?: number;
+  timestamp?: number;
+  inputs?: Array<{
+    txid: string;
+    vout: number;
+    sequence: number;
+    unlockingScript?: string;
+    address?: string;
+    satoshis?: number;
+  }>;
+  outputs?: Array<{
+    satoshis?: number;
+    lockingScript?: string;
+    address?: string;
+    type?: string;
+  }>;
+}
+
 // Types using proper BSV terminology
 export interface BSVTransaction {
   txid: string;
@@ -129,13 +151,13 @@ class ARCClient {
     return null;
   }
 
-  private formatTransaction(data: Record<string, unknown>): BSVTransaction {
+  private formatTransaction(data: TransactionAPIResponse): BSVTransaction {
     return {
       txid: data.txid,
       size: data.size || 0,
       fee: data.fee || 0,
       timestamp: data.timestamp || Date.now() / 1000,
-      inputs: data.inputs?.map((input: Record<string, unknown>) => ({
+      inputs: data.inputs?.map((input) => ({
         txid: input.txid,
         vout: input.vout,
         sequence: input.sequence,
@@ -143,7 +165,7 @@ class ARCClient {
         address: input.address,
         satoshis: input.satoshis || 0
       })) || [],
-      outputs: data.outputs?.map((output: Record<string, unknown>) => ({
+      outputs: data.outputs?.map((output) => ({
         satoshis: output.satoshis || 0,
         lockingScript: output.lockingScript || '', // Using proper BSV term
         address: output.address,
