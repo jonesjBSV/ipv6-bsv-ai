@@ -563,7 +563,7 @@ export default function IPv6AdoptionVisualization() {
                   <ul className="text-sm text-green-700 space-y-1">
                     <li>• <strong>NAT Challenges:</strong> Blockchain nodes behind NAT cannot accept incoming connections, limiting network topology</li>
                     <li>• <strong>IPv6 Benefits:</strong> Every node can be directly addressable, enabling optimal mesh network topology</li>
-                    <li>• <strong>Research Basis:</strong> Blockchain Research Institute (2023) found 80% of NAT nodes operate as "leaf nodes only"</li>
+                    <li>• <strong>Research Basis:</strong> Blockchain Research Institute (2023) found 80% of NAT nodes operate as &quot;leaf nodes only&quot;</li>
                   </ul>
                 </div>
 
